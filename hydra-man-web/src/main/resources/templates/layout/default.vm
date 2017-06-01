@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>template</title>
+		<!--<link rel="icon" href="//static.360buyimg.com/popd/images/favicon.ico" type="image/x-icon">-->
+		<meta charset="utf-8" />
+		<script>
+			var pageConfig = {
+				jdfVersion: '2.0.0'
+			};
+		</script>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="renderer" content="webkit" />
+        <link rel="dns-prefetch" href="//static.360buyimg.com" />
+        <link rel="icon" href="//www.jd.com/favicon.ico" mce_href="//www.jd.com/favicon.ico" type="image/x-icon" />
+		<link type="text/css" rel="stylesheet" href="//static.360buyimg.com/shop/pop_man_uibase/css/base.css" source="combo" />
+		<link type="text/css" rel="stylesheet" href="//static.360buyimg.com/shop/pop_man_uibase/widget/??base-blue/base-blue.css,man-layout/man-layout.css,man-header/man-header.css,man-menu/man-menu.css,crumbs/crumbs.css,font/font.css,icon/icon.css,button/button.css,model/model.css,tab/tab.css,text-table/text-table.css,form/form.css,pagin/pagin.css,dialog/dialog.css,tips/tips.css,step/step.css,droplayer/droplayer.css,gotop/gotop.css" source="widget" />
+		<link type="text/css" id="skinStyle" rel="stylesheet" href="//static.360buyimg.com/popd/css/skin1.css?v=1" />
+		<script type="text/javascript" src="http://misc.360buyimg.com/jdf/??1.0.0/unit/base/1.0.0/base.js"></script>
+		<script type="text/javascript" src="//static.360buyimg.com/popd/js/resourceloader.js?v=1496193623357"></script>
+		<script>
+			Vue.filter('timestamp2datestr', VueMan.filters.timestamp2datestr);
+			Vue.filter('timestamp2datetimestr', VueMan.filters.timestamp2datetimestr);
+			Vue.directive('scroller', VueMan.directive.scroller);
+
+			<!-- 加载进度条 -->
+			var _loading = [];
+			Vue.http.interceptors.push(function(request, next) {
+				if(!request.hideLoading) {
+					var tmp = new Vue();
+					tmp["$Message"].config({
+						top: 350
+					});
+					_loading.push(tmp["$Message"].loading('正在加载中...', 0));
+				}
+				request.url = request.url + (request.url.indexOf("?") == -1 ? "?" : "&") + "v=" + new Date().getTime();
+				next(function(response) {
+					response.data = typeof response.data == "string" ? response.data != "" ? jQuery.parseJSON(response.data) : '' : response.data;
+					for(var i in _loading) {
+						_loading[i]();
+					}
+					if(response.status == 500) {
+						new Vue()["$Notice"].error({
+							title: '出了点小问题',
+							desc: "系统繁忙，请稍后再试"
+						});
+					} else if(response.status == 0) {
+						new Vue()["$Notice"].error({
+							title: '出了点小问题',
+							desc: "您的网络连接失败"
+						});
+					}
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="skin">
+			<modal :show.sync="skinDialog" title="换肤" :scrollbar="false" :closeCallback="confirmDialog" :width="752">
+				<div slot="modal-body" class="modal-body" v-scroller sheight="388" id="ud-express" style="padding: 15px;">
+					<div class="ud-skinchange-box">
+						<ul class="ud-skinchange-list" style="padding: 0;">
+							<li class="li-item" :class="{'on':index==$index}" v-for="it in skins">
+								<div class="img-box"><img :src="it.viewImg" alt="" @click="setSkin($index)"><s class="icon-on"></s></div>
+								<p class="skin-name">{{it.name}}</p>
+							</li>
+
+						</ul>
+
+					</div>
+				</div>
+				<div slot="modal-footer" class="modal-footer">
+					<button class="btn-h28 btn-blue" @click="saveSkin">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="btn-h28 btn-white" @click="confirmDialog">取消</button>
+				</div>
+			</modal>
+		</div>
+		<script>
+			new Vue({
+				el: "#skin",
+				components: {
+					modal: VueMan.modal
+				},
+
+				data: {
+					index: 0,
+					save: false,
+					skinDialog: false,
+					skins: [{
+						name: "科技蓝",
+						viewImg: "http://img11.360buyimg.com/uba/jfs/t3070/97/998458658/4062/bc860ec7/57c3f4adN9104b501.jpg"
+					}, {
+						name: "京东红",
+						viewImg: "http://img11.360buyimg.com/uba/jfs/t3223/177/989491178/4254/8529604c/57c3f4adN1e0e3e40.jpg"
+					}, {
+						name: "蜜桔橙",
+						viewImg: "http://img10.360buyimg.com/uba/jfs/t3190/215/987915075/4103/3f1c9a09/57c3f4adN594ac3dc.jpg"
+					}, {
+						name: "青蓬绿",
+						viewImg: "http://img30.360buyimg.com/uba/jfs/t3100/57/983309005/3866/1a1772c5/57c3f4adNad4e122e.jpg"
+					}]
+				},
+				ready: function() {
+					var _this = this;
+					jQuery(function() {
+						jQuery("#changeskin").parent().bind("click", function() {
+							_this.skinDialog = true;
+						});
+					});
+					_this.href = jQuery("#skinStyle").attr("href").split("/");
+					var skinTmp = _this.href[_this.href.length - 1].split(".")[0];
+					_this.index = skinTmp.substr(skinTmp.length - 1, 1) - 1;
+				},
+				methods: {
+					setSkin: function(index) {
+						this.index = index;
+						this.changeStyle();
+					},
+					changeStyle: function() {
+						var tmp = VueMan.utils.objClone(this.href);
+						tmp[tmp.length - 1] = "skin" + (this.index + 1) + ".css";
+						jQuery("#skinStyle").attr("href", tmp.join("/"));
+					},
+					confirmDialog: function() {
+						this.skinDialog = false;
+						if(!this.save) {
+							jQuery("#skinStyle").attr("href", this.href.join("/"));
+						} else {
+							this.save = false;
+							this.href = jQuery("#skinStyle").attr("href").split("/");
+						}
+						var skinTmp = this.href[this.href.length - 1].split(".")[0];
+						this.index = skinTmp.substr(skinTmp.length - 1, 1) - 1;
+					},
+					saveSkin: function() {
+						var _this = this;
+						Vue.http.post('//man.jd.com/api/frame/user/skin/save', "skinCode=skin" + (this.index + 1), {
+							headers: {
+								"Content-Type": 'application/x-www-form-urlencoded'
+							},
+							credentials: true
+						}).then(function(response) {
+							_this.save = true;
+							_this.changeStyle();
+							_this.confirmDialog();
+						});
+					}
+				}
+			});
+		</script>
+
+		<!--  /widget/man-header/man-header.vm -->
+		<div class="l-header-wrap">
+			<div class="l-header-box">
+				<a href="//man.jd.com" class="b-logo-box">
+					<img src="//static.360buyimg.com/popd/images/logo-man.png" width="180" height="21" alt="POP运营管理平台"></a>
+				<ul class="b-nav-box">
+					<li class="item-nav item-nav-curr">
+						<a href="http://new.man.jd.com" clstag=pageclick|keycount|new_man_201611181|1>首页</a>
+					</li>
+					<li class="item-nav">
+						<a href="http://man.jd.com/top_menu/redirect?topMenuId=83" clstag=pageclick|keycount|new_man_201701031|6>商家</a>
+					</li>
+					
+				</ul>
+				<ul class="b-userinfo-box">
+					<li class="fl b-userinfo-box-item b-userinfo-box-message">
+						<a class="message_box" href="//man.jd.com/message" target="_blank">
+							<span class="message_icon"></span>
+							<span class="message_num" data-num="0">0</span>
+						</a>
+					</li>
+					<li class="fl b-userinfo-box-item">
+						<span class="h-userinfo"> <i class="icon-user"></i> <em class="h-username">刘志强</em></span>
+						<div class="b-user-menu-box" style="z-index: 99;">
+							<s class="icon-user-menu-arr"></s>
+							<ul class="b-user-menu-list">
+								<li class="li-item">
+									<a href="javascript:;" clstag="pageclick|keycount|new_man_201611181|64"><i class="icon-peeling" id="changeskin"></i>换肤</a>
+								</li>
+								<li class="li-item">
+									<a href="http://ssa.jd.com/sso/logout?ReturnUrl=http://man.jd.com" target="_top" clstag="pageclick|keycount|new_man_201611181|63"><i class="icon-exit"></i>退出</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			jQuery(function() {
+				var timer = null;
+				jQuery(".b-userinfo-box .icon-user,.b-user-menu-box").hover(function() {
+					clearTimeout(timer);
+					jQuery(".b-userinfo-box").addClass("user-menu-on");
+				}, function() {
+					timer = setTimeout(function() {
+						jQuery(".b-userinfo-box").removeClass("user-menu-on")
+					}, 500);
+				})
+			})
+		</script>
+
+		<!--/ /widget/man-header/man-header.vm -->
+		<div class="l-wrap">
+			<div class="l-main">
+				<!--  /widget/man-menu/man-menu.vm -->
+				<div id="l-menu" class="l-menu">
+					<div class="h-menu-hd menu01 menu0-curr" style="background-color:#FFF;border-bottom: transparent;"><strong @click="shortcutMenuSetIsUnfoldSet()" class="h-menu-title menu0-link" style="position:absolute;top:7px;font-size:16px;margin-left: -15px;cursor: pointer;">快捷菜单</strong>
+						
+						<a href="javascript:;" class="icon-setup" id="menu-setup" @click="showShortcutMenuSet()" clstag="pageclick|keycount|new_man_201611181|62"></a>
+						<a href="javascript:;" class="menu-pack-up"></a>
+						<span class="dward"></span>
+					</div>
+					<ul class="h-menu-box" v-show="shortcutMenuSet_IsUnfold" style="background-color:#FCFCFC;border-top:1px solid #EBEDED;">
+						<li class="item-menu menu0">
+							<a href="//man.jd.com/insetsys?menuId=94&topMenuId=83" class="menu1-link" style="border-left-color:#fcfcfc;" clstag=pageclick|keycount|new_man_201701031|16 oldfunction=true inset-sys-url=http://seller.man.jd.com/seller/check/check_index.action>商家任务审核</a>
+						</li>
+						
+					</ul>
+					<ul class="h-menu-box h-menu-line">
+						<li class="item-menu menu01 menu0-curr">
+							<a href="javascript:;" class="menu0-link">消息管理<i class="icon-menu-arr"></i></a>
+							<ul class="menu1-box">
+								<li class="menu1">
+									<a href="http://new.man.jd.com/message" class="menu1-link">已收到的消息</a>
+								</li>
+								<li class="menu1">
+									<a href="http://message.pop.jd.com/sink/list" class="menu1-link">个人消息配置</a>
+								</li>
+							</ul>
+						</li>
+						<li class="item-menu menu0">
+							<a href="$menu.menu.resource_url" class="menu0-link">基础管理</a>
+						</li>
+					</ul>
+
+
+					<script>
+						vm_lMenu = new Vue({
+							el: "#l-menu",
+							components: {
+								datepicker: VueMan.datepicker,
+								modal: VueMan.modal,
+								pagination: VueMan.pagination,
+								alert: VueMan.alert
+							},
+							data: function() {
+								return {
+									shortcutMenuSet_IsUnfold: true, // 快捷菜单是否展开
+									shortcutMenuSet_IsShow: false, // 快捷菜单设置弹出层
+									shortcutMenuSet_SucessMsg: "保存成功！！", // 保存成功提示
+									saveShortcutMenuSet_Param: {
+										menuResourceId: new Array()
+									},
+									api: null
+								}
+							},
+							methods: {
+								// 设置快捷菜单是否展开
+								shortcutMenuSetIsUnfoldSet: function() {
+									this.shortcutMenuSet_IsUnfold = !this.shortcutMenuSet_IsUnfold;
+								},
+								// 显示快捷菜单设置
+								showShortcutMenuSet: function() {
+									this.shortcutMenuSet_IsShow = true;
+								},
+								// 关闭快捷菜单设置
+								closeShortcutMenuSet: function() {
+									location.reload();
+								},
+								// 保存快捷菜单设置
+								saveShortcutMenuSet: function() {
+									var param = this.saveShortcutMenuSet_Param;
+									param.menuResourceId = new Array();
+									jQuery("input[name=shortcut-menu-id]:checked").each(function() {
+										param.menuResourceId.push(jQuery(this).val());
+									});
+									var self = this;
+									this.getApi().saveShortcutMenuSet(param, function(data) {
+										alert(self.shortcutMenuSet_SucessMsg);
+										location.reload();
+									});
+								},
+								getApi: function() {
+									return this.api;
+								}
+							},
+							ready: function() {
+								(function(root, http) {
+									var api = {};
+									api.saveShortcutMenuSet = function(param, func) {
+										http.post('/api/pageframe/shortcut_menu_set/save', param).then(function(response) {
+											func(response.body);
+										}, function(response) {
+											alert("保存失败");
+										});
+									}
+									root.api = api;
+								})(this, Vue.http);
+							}
+						});
+					</script>
+				</div>
+				<script>
+					jQuery(function() {
+						jQuery(".menu0-link").click(function() {
+							if(jQuery(this).parent().hasClass("menu0-curr")) {
+								jQuery(this).parent().removeClass("menu0-curr");
+							} else {
+								jQuery(this).parent().addClass("menu0-curr");
+							}
+						});
+					})
+				</script>
+				<!--/ /widget/man-menu/man-menu.vm -->
+				<!-- l-menu -->
+				<div class="l-content">
+					$screen_content
+				</div>
+				<!-- l-content -->
+			</div>
+			<!-- l-main -->
+		</div>
+		<!-- l-wrap -->
+
+		<!--  /widget/man-footer/man-footer.vm -->
+		<div id="popfooter">
+			<style type="text/css">
+				.l-footer {
+					max-height: 54px;
+				}
+				
+				.b-footer-box {
+					padding-top: 10px;
+					padding-bottom: 10px;
+				}
+				
+				.jimi {
+					width: 34px;
+					height: 34px;
+					padding: 2px 2px;
+					position: absolute;
+					right: 0px;
+					bottom: 50%;
+				}
+				
+				.jimi_icon {
+					display: block;
+					width: 28px;
+					height: 34px;
+					margin-left: 4px;
+					background-image: url(//static.360buyimg.com/popd/images/jimi.png);
+					background-size: 100%;
+				}
+			</style>
+			<div class="l-footer">
+				<div class="b-footer-box">
+					<p class="copyright">
+						<a href="javascript:;" @click="showTelme" clstag="pageclick|keycount|new_man_201611181|60">联系我们</a> |
+						<a href="http://man.jd.com/global-nav" clstag="pageclick|keycount|new_man_201611181|61">网站地图</a> |
+						<a href="//man.jd.com/updatedlog" target="_blank">更新日志</a>
+					</p>
+					<p class="copyright" style="margin-top: 10px;">Copyright @ 2004-2017 JD.COM 京东 版权所有</p>
+				</div>
+			</div>
+			<style>
+				#gotop {
+					position: fixed;
+					right: 0;
+					bottom: 52px;
+				}
+				
+				#gotop .modal-body .txt {
+					line-height: 36px;
+					font-size: 12px;
+				}
+			</style>
+			<div id="gotop" class="b-gotop-box">
+				<modal :show.sync="telme" title="联系我们" :scrollbar="false" :closeCallback="confirmDialog" :width="320">
+					<div slot="modal-body" class="modal-body" style="padding: 15px;">
+						<p class="txt">Man端吐槽咚咚群：342770</p>
+						<p class="txt">Man端产品联系人：梁博威 （ERP：liangbowei ）</p>
+					</div>
+					<div slot="modal-footer" class="modal-footer">
+						<button class="btn-h28 btn-white" @click="telme=false">关闭</button>
+					</div>
+				</modal>
+
+				<a href="http://tucao.man.jd.com/suggestion/addlist?menuId=1&domain=new.man.jd.com" class="gotop-sugg" title="意见反馈" clstag="pageclick|keycount|new_man_201611181|59">意见反馈</a>
+				<!--<a href="javascript:;" @click="showTelme" class="gotop-contact" title="联系我们">联系我们</a>-->
+				<a href="javascript;" class="gotop" title="返回顶部"></a>
+			</div>
+			<a class="jimi theme_clor" href="http://openjimi.jd.com/index.action?source=V7ZR3y" target="_blank" title="系统咨询">
+				<span class="jimi_icon"></span>
+			</a>
+		</div>
+		<script>
+			new Vue({
+				el: "#popfooter",
+				data: {
+					telme: false
+				},
+				components: {
+					modal: VueMan.modal
+				},
+				watch: {
+					telme: function(val) {
+						if(!val) {
+							jQuery(".b-gotop-box").css("right", '0');
+						}
+					}
+				},
+				ready: function() {
+					jQuery(".gotop").hide();
+					//当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
+					jQuery(window).scroll(function() {
+						if(jQuery(window).scrollTop() > 100) {
+							jQuery(".gotop").fadeIn(600);
+						} else {
+							jQuery(".gotop").fadeOut(600);
+						}
+					});
+					//当点击跳转链接后，回到页面顶部位置
+					jQuery(".gotop").click(function() {
+						jQuery('body,html').animate({
+							scrollTop: 0
+						}, 500);
+						return false;
+					});
+				},
+				methods: {
+					showTelme: function() {
+						this.telme = true;
+						this.jQuerynextTick(function() {
+							jQuery(".b-gotop-box").css("right", '18px');
+						});
+					}
+				}
+			});
+			//首先将#back-to-top隐藏
+
+			//jimi
+			//判断是否为商品目录下
+			~ function() {
+				var
+					targetUrl = 'newware.man.jd.com',
+					targetUrl1 = 'ware.man.jd.com',
+					currentUrl = location.href,
+					flag = (currentUrl.indexOf(targetUrl) !== -1 || currentUrl.indexOf(targetUrl1) !== -1),
+					isFirst = (document.cookie.indexOf('isFirst') === -1),
+					el = jQuery('.jimi');
+				if(flag) {
+					el.show();
+					if(isFirst) {
+						el.pulsate({
+							color: el.css("background-color"),
+							reach: 20,
+							speed: 1000,
+							pause: 1000,
+							glow: true,
+							repeat: 3,
+							onHover: false
+						});
+					}
+					setCookie('isFirst', 1, 365);
+				} else {
+					el.hide();
+				}
+
+				function setCookie(c_name, value, expiredays) {
+					var exdate = new Date()
+					exdate.setDate(exdate.getDate() + expiredays)
+					document.cookie = c_name + "=" + escape(value) +
+						((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+				}
+			}();
+		</script>
+
+	</body>
+
+</html>

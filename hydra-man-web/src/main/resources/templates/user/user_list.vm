@@ -1,0 +1,59 @@
+<template id="list" style="display: none;">
+    <p-form v-ref:search label-position="right" :rules="ruleValidate" :label-width="80" @on-form-submit="search(null)">
+        <p-row :gutter="10">
+            <p-col span="8">
+                <p-form-item label="姓名：">
+                    <p-input type="text" :value.sync="query.name" placeholder="请输入姓名" :maxlength="20"></p-input>
+                </p-form-item>
+            </p-col>
+            <p-col span="8">
+                <p-form-item label="年龄：" rule-key="age" :value="query.age">
+                    <p-input :value.sync="query.age" placeholder="请输入年龄" :maxlength="3"></p-input>
+                </p-form-item>
+            </p-col>
+            <p-col span="8">
+                <p-form-item label="地址：">
+                   <p-input :value.sync="query.addr" placeholder="请输入地址" :maxlength="50"></p-input>
+                </p-form-item>
+            </p-col>
+        </p-row>
+        <p-row>
+            <p-col span="24" style="text-align: center;">
+                <p-button type="primary" html-type="submit">查询</p-button>
+                <p-button type="ghost">重置</p-button>
+            </p-col>
+        </p-row>
+
+    </p-form>
+    <p-table :columns="columns" :data="page.content" stripe highlight-row></p-table>
+    <p-page :total="page.totalElements" :current.sync="query.page" @on-change="search" @on-page-size-change="search(1)" :page-size.sync="query.pageSize"></p-page>
+</template>
+<template id="edit">
+    <p-row>
+        <p-col span="12">
+            <p-form v-ref:user :rules="ruleValidate"  :label-width="80" @submit="save">
+                <p-form-item label="姓名" rule-key="name" :value.sync="user.name">
+                    <p-input :value.sync="user.name" placeholder="请输入姓名"  :maxlength="20"></p-input>
+                </p-form-item>
+                <p-form-item label="年龄" required>
+                    <p-input-number :value.sync="user.age" :min="1" placeholder="年龄"></p-input-number>
+                </p-form-item>
+                <p-form-item label="地址" rule-key="addr" :value.sync="user.addr">
+                    <p-input :value.sync="user.addr"  placeholder="地址" :maxlength="50"></p-input>
+                </p-form-item>
+                <p-form-item>
+                    <p-button type="primary" :html-type="'submit'">提交</p-button>
+                    <p-button type="ghost" @click="goback" style="margin-left: 8px">返回</p-button>
+                </p-form-item>
+            </p-form>
+        </p-col>
+    </p-row>
+</template>
+<div id="app">
+    <router-view></router-view>
+</div>
+##<script src="static/js/user/case/mock.min.js" type="text/javascript"></script>
+##<script src="static/js/user/case/case.js" type="text/javascript"></script>
+<script src="/js/user/user-components.js" type="text/javascript"></script>
+<script src="/js/user/user-api.js" type="text/javascript"></script>
+<script src="/js/user/user-router.js" type="text/javascript"></script>

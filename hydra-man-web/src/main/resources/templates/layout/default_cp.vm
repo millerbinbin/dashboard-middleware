@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>首页</title>
+    <meta charset="utf-8" />
+    <script>
+        var pageConfig = {
+            jdfVersion: '2.0.0'
+        };
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//static.360buyimg.com" />
+    <link type="text/css" rel="stylesheet" href="//static.360buyimg.com/shop/pop_man_uibase/css/base.css" source="combo" />
+    <link type="text/css" rel="stylesheet" href="//static.360buyimg.com/shop/pop_man_uibase/widget/??base-blue/base-blue.css,man-layout/man-layout.css,man-header/man-header.css,man-menu/man-menu.css,crumbs/crumbs.css,font/font.css,icon/icon.css,button/button.css,model/model.css,tab/tab.css,text-table/text-table.css,form/form.css,pagin/pagin.css,dialog/dialog.css,tips/tips.css,step/step.css,droplayer/droplayer.css,gotop/gotop.css" source="widget" />
+    <script type="text/javascript" src="//static.360buyimg.com/popd/js/resourceloader.js?v=$date.get('yyyyMMddHHmmss')"></script>
+    <script>
+    (function(){
+        var $loading;
+        Vue.http.interceptors.push(function(request, next) {
+            if(!request.hideLoading) {
+                 $loading=new Vue().$Message.loading('正在加载中...', 0);
+            }
+            request.url = request.url + (request.url.indexOf("?") == -1 ? "?" : "&") + "v=" + new Date().getTime();
+            next(function(response) {
+                response.data = typeof response.data == "string" ? response.data != "" ? $.parseJSON(response.data) : '' : response.data;
+                $loading();
+                if(response.status == 500) {
+                    new Vue().$Notice.error({
+                        title: '出了点小问题',
+                        desc: "系统繁忙，请稍后再试"
+                    });
+                } else if(response.status == 0) {
+           
+                     new Vue().$Notice.error({
+                        title: '出了点小问题',
+                        desc: "您的网络连接失败"
+                    });
+                }
+            });
+        });
+    })();
+        
+    </script>
+</head>
+
+<body>
+
+<!--<div id="loading" style="position: fixed; top:50%;left:50%;display: none;z-index: 101;" class="progressBar">
+    <img src="http://campus.jd.com/static/loading/img/waiting.gif" style="margin-right:8px;" align="absmiddle" height="30" width="30">
+    <span style="height:30px;display:block;float:right;padding-right:30px;">正在响应，请稍候...</span>
+</div>
+
+<div id="error-info-alert" role="alert" class="fade-transition b-alert b-alert-s01" style="position: fixed;top:60px;left: 50%;width:
+220px; display:none;z-index:999999;">
+    <button type="button" class="close" onclick="$('#error-info-alert').hide();">
+<span>×</span>
+</button>
+    <strong>提醒：</strong> 系统繁忙，请稍后再试。
+
+</div>-->
+
+<!--  /widget/man-header/man-header.vm -->
+<div class="l-header-wrap">
+    <div class="l-header-box">
+        <a href="//new.man.jd.com" class="b-logo-box">
+            <img src="//static.360buyimg.com/shop/pop_man_uibase/widget/man-header/image/logo-man.png" width="166" height="21" alt="MAN端管理平台"></a>
+        <ul class="b-nav-box">
+            <li class="item-nav item-nav-curr">
+                <a href="http://new.man.jd.com" clstag=pageclick|keycount|new_man_201611181|1>首页</a>
+            </li>
+            <li class="item-nav">
+                <a href="http://new.man.jd.com/top_menu/redirect?topMenuId=4" clstag=pageclick|keycount|new_man_201611181|6>商品</a>
+            </li>
+            
+        </ul>
+        <div class="b-userinfo-box">
+                    <span class="h-userinfo"> <i class="icon-user"></i> <em class="h-username">刘志强</em>
+            </span>
+            <a href="http://new.man.jd.com/global-nav"><i class="icon-location" title="网站地图"></i></a>
+            <div class="b-user-menu-box" style="z-index: 99;">
+                <s class="icon-user-menu-arr"></s>
+                <ul class="b-user-menu-list">
+                    <li class="li-item">
+                        <a href="javascript:;"><i class="icon-peeling" id="changeskin"></i>换肤</a>
+                    </li>
+                    <li class="li-item">
+                        <a href="http://ssa.jd.com/sso/logout?ReturnUrl=http://new.man.jd.com" target="_top"><i class="icon-exit"></i>退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        var timer = null;
+        $(".b-userinfo-box .icon-user,.b-user-menu-box").hover(function() {
+            clearTimeout(timer);
+            $(".b-userinfo-box").addClass("user-menu-on");
+        }, function() {
+            timer = setTimeout(function() {
+                $(".b-userinfo-box").removeClass("user-menu-on")
+            }, 500);
+        })
+    })
+</script>
+
+<div class="l-wrap">
+    <div class="l-main">
+        <div id="l-menu" class="l-menu">
+            <div class="h-menu-hd menu01 menu0-curr" style="background-color:#FFF;border-bottom: transparent;"><strong @click="shortcutMenuSetIsUnfoldSet()" class="h-menu-title menu0-link" style="position:absolute;top:7px;font-size:16px;margin-left: -15px;">快捷菜单</strong>
+
+                <a href="javascript:;" class="icon-setup" id="menu-setup" @click="showShortcutMenuSet()"></a>
+                <span class="dward"></span>
+            </div>
+            <ul class="h-menu-box" v-show="shortcutMenuSet_IsUnfold" style="background-color:#FCFCFC;border-top:1px solid #EBEDED;">
+                <li class="item-menu menu0">
+                    <a href="http://newware.man.jd.com/poster/list" class="menu1-link" style="border-left-color:#fcfcfc;" clstag=pageclick|keycount|new_man_201611181|9>统一海报</a>
+                </li>
+                <li class="item-menu menu0">
+                    <a href="http://newfin.man.jd.com/jinsp/content" class="menu1-link" style="border-left-color:#fcfcfc;" clstag=pageclick|keycount|new_man_201611181|20>我的金算盘</a>
+                </li>
+            </ul>
+            <ul class="h-menu-box h-menu-line">
+            </ul>
+
+        </div>
+        <script>
+            $(function() {
+                $(".menu0-link").click(function() {
+                    if($(this).parent().hasClass("menu0-curr")) {
+                        $(this).parent().removeClass("menu0-curr")
+                    } else {
+                        $(this).parent().addClass("menu0-curr")
+                    }
+
+                })
+            })
+        </script>
+        <div class="l-content">
+            $screen_content
+
+        </div>
+        <!-- l-content -->
+    </div>
+</div>
+
+<div id="popfooter">
+    <style type="text/css">
+        .b-footer-box {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+    <div class="l-footer">
+        <div class="b-footer-box">
+            <p class="copyright">
+                <a href="javascript:;" @click="showTelme">联系我们</a> |
+                <a href="//new.man.jd.com/global-nav">网站地图</a> |
+                <a href="//new.man.jd.com/updatedlog" target="_blank">更新日志</a>
+            </p>
+            <p class="copyright" style="margin-top: 10px;">Copyright @ 2004-2016 JD.COM 京东 版权所有</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
