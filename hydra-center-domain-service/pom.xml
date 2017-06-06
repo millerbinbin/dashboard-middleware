@@ -80,8 +80,14 @@
 
         <dependency>
             <groupId>com.fresh.commons</groupId>
-            <artifactId>commons-data</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>fresh-commons-data</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fresh.commons</groupId>
+            <artifactId>fresh-commons-exception</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
