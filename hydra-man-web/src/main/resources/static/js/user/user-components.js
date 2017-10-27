@@ -1,15 +1,25 @@
 var app = {};
 
 app.user_col = [{
+    type: 'selection',
+    width: 60,
+    align: 'center'
+}, {
 	title: '姓名',
-	key: 'name'
+	key: 'name',
+	sortable: true,
+	render: function(row, column, index) {
+	    console.log(row.name);
+	    return '<p-icon type="person">'+ row.name +'</p-icon>';
+	}
 }, {
 	title: '年龄',
-	key: 'age'
-
+	key: 'age',
+    sortable: true
 }, {
 	title: '地址',
-	key: 'addr'
+	key: 'addr',
+	sortable: true
 }, {
 	title: '操作',
 	key: 'action',
@@ -17,7 +27,7 @@ app.user_col = [{
 		var path = "/edit?id=" + row.id;
 		return '<p-button type="text" size="small" v-link="\'' + path + '\'">编辑</p-button>' +
 			'<p-poptip confirm title="您确认删除这条内容吗？"  @on-ok="deleteOne(' + row.id + ')">' +
-			'<p-button type="text" size="small">删除</p-button></p-poptip>';
+			'<p-button type="error" size="small">删除</p-button></p-poptip>';
 	}
 }];
 
@@ -36,6 +46,7 @@ app.list = {
 	},
 	data: function() {
 		return {
+		    selected: [],
 			columns: app.user_col,
 			query: { //分页查询
 				age: 1,
@@ -84,7 +95,10 @@ app.list = {
 			}.bind(this), function(data) {
 				this.$Message.error(data.data.msg); //失败提示信息
 			}.bind(this));
-		}
+		},
+        getSelected: function(selected) {
+          this.selected = selected;
+        }
 	}
 };
 

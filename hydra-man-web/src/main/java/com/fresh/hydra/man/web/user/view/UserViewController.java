@@ -14,7 +14,6 @@ public class UserViewController {
 
     @GetMapping("/list")
     public String list() {
-
         return "user/user_list";
     }
 }

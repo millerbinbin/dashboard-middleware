@@ -1,4 +1,4 @@
-<template id="list" style="display: none;">
+<template id="list" >
     <p-form v-ref:search label-position="right" :rules="ruleValidate" :label-width="80" @on-form-submit="search(null)">
         <p-row :gutter="10">
             <p-col span="8">
@@ -25,7 +25,11 @@
         </p-row>
 
     </p-form>
-    <p-table :columns="columns" :data="page.content" stripe highlight-row></p-table>
+    <p-table border highlight-row :columns="columns" :data="page.content" @on-selection-change="getSelected">
+    <p slot="footer">
+        {{selected|json}}
+    </p>
+    </p-table>
     <p-page :total="page.totalElements" :current.sync="query.page" @on-change="search" @on-page-size-change="search(1)" :page-size.sync="query.pageSize"></p-page>
 </template>
 <template id="edit">
@@ -54,6 +58,6 @@
 </div>
 ##<script src="static/js/user/case/mock.min.js" type="text/javascript"></script>
 ##<script src="static/js/user/case/case.js" type="text/javascript"></script>
-<script src="/js/user/user-components.js" type="text/javascript"></script>
-<script src="/js/user/user-api.js" type="text/javascript"></script>
-<script src="/js/user/user-router.js" type="text/javascript"></script>
+<script src="../js/user/user-components.js" type="text/javascript"></script>
+<script src="../js/user/user-api.js" type="text/javascript"></script>
+<script src="../js/user/user-router.js" type="text/javascript"></script>

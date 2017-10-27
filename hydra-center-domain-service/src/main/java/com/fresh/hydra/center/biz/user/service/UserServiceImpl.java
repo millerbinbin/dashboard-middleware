@@ -6,7 +6,6 @@ import com.fresh.hydra.center.biz.user.domain.UserQuery;
 import com.fresh.hydra.center.biz.user.domain.User;
 import com.fresh.hydra.center.biz.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 /**
  * Created by yanhua on 2017/2/3.
  */
-@Service
+//@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(user.getId(), "user id is null.");
         User u = userRepository.getByName(user.getName());
         if(u != null  && !u.getId().equals(user.getId())) {
-            throw  new DuplicateUsernameException();
+            throw new DuplicateUsernameException();
         }
 
         userRepository.update(user);
@@ -53,8 +52,17 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(id);
     }
 
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Override
+    public void addUser(User user) throws DuplicateUsernameException {
+        User u = userRepository.getByName(user.getName());
+        if(u != null  && !u.getId().equals(user.getId())) {
+            throw new DuplicateUsernameException();
+        }
+        userRepository.add(user);
     }
+
+
+//    public void setUserRepository(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 }

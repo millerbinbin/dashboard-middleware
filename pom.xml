@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<modules>
+		<module>hydra-center-commons</module>
 		<module>hydra-center-domain-service</module>
 		<module>hydra-man-web</module>
 		<!--<module>hydra-center-remote-service</module>-->

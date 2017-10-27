@@ -33,9 +33,8 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("REST API")
                 .description("前后端分离的协议在这里定义")
-                .termsOfServiceUrl("http://hydra.man.jd.com/")
-                .contact("yanhua")
-                .version("1.0")
+                .contact("ABC")
+                .version("1.0.0")
                 .build();
     }
 

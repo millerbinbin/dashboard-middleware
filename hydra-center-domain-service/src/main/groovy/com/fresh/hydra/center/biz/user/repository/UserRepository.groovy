@@ -1,8 +1,8 @@
 package com.fresh.hydra.center.biz.user.repository
 
-import com.fresh.commons.data.page.PageRequest
 import com.fresh.hydra.center.biz.user.domain.User
 import com.fresh.hydra.center.biz.user.domain.UserQuery
+import com.fresh.commons.data.page.PageRequest
 import org.apache.ibatis.annotations.Delete
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Update
 /**
  * Created by yanhua on 2017/2/3.
  */
-@Mapper
+//@Mapper
 public interface UserRepository {
 
     @Insert("INSERT into T_USER (name,age,addr) VALUES(#{name}, #{age}, #{addr})")

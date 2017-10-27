@@ -1,6 +1,6 @@
 (function(root, $http) {
     var api = {};
-    api.userUri = "/api/users";
+    api.userUri = "api/users";
     api.query = function(query, func1, func2) {
         var paramStr = "";
         for(var i in query) {
@@ -37,6 +37,12 @@
             if(func2) func2(response);
         });
     };
-
+    api.addUser = function(query, func1, func2) {
+        $http.post(api.userUri, query).then(function(response) {
+                func1(response.data);
+            }, function(response) {
+                if(func2) func2(response);
+            });
+    }
     root.UserApi = api;
 })(window, Vue.http);
