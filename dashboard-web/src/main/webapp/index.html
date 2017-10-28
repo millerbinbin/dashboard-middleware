@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>template</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="dns-prefetch" href="//static.360buyimg.com"/>
+    <link rel="icon" href="//www.jd.com/favicon.ico" mce_href="//www.jd.com/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="//static.360buyimg.com/shop/pop_man_uibase/css/base.css"
+          source="combo"/>
+    <script type="text/javascript" src="http://misc.360buyimg.com/jdf/??1.0.0/unit/base/1.0.0/base.js"></script>
+    <script type="text/javascript" src="http://static.360buyimg.com/popd/js/resourceloader.js"></script>
+    <script type="text/javascript" src="https://static.360buyimg.com/popd/popd_common/pop-design.min.js"></script>
+    <script src="js/stat/stat-loading.js" type="text/javascript"></script>
+    <script type=text/javascript src=js/echarts.min.js></script>
+    <script type=text/javascript src=js/vue-echarts.js></script>
+</head>
+
+<body>
+<template id="list">
+    <div id="chart" style="width: 300px; height: 200px"></div>
+    <p-table border :columns="page.cols" :data="page.content" @on-selection-change="getSelected">
+    </p-table>
+    <p-page :total="page.totalElements" :current.sync="query.page" @on-change="search" @on-page-size-change="search(1)"
+            :page-size.sync="query.pageSize"></p-page>
+</template>
+<div id="app">
+    <router-view></router-view>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+	// 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart'));
+    console.log(myChart);
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>
+</html>
+
+<script type="text/javascript">
+var app = {};
+
+app.list = {
+    template: "#list",
+    route: {
+        data: function(transition) {
+            var q = this.$route.query; //获取url里面的路由查询对象"page=1&pageSize=10"==>>{page:"1",pageSize:"10"}
+            this.query.pageSize = q.pageSize ? q.pageSize * 1 : 10;
+            this.query.page = q.page ? q.page * 1 : 1;
+            this.loadTable();
+        }
+    },
+    data: function() {
+        return {
+            selected: [],
+            query: { //分页查询
+                pageSize: 10, //每页显示多少条
+                page: 1
+            },
+            page: { //分页
+                totalElements: 0,
+                content: [],
+                cols: [{}],
+                totalPage: 0
+            }
+        }
+    },
+    methods: {
+        loadTable: function() {
+            // get cols
+            StatApi.cols(function(data) {
+                this.page.cols = jQuery.parseJSON(data);
+            }.bind(this));
+            // get data
+            StatApi.query(this.query, function(data) { //请见user-api.js
+                this.page.content = data.content; //获取本页list内容
+                this.page.totalElements = data.totalElements; //获取共计有多少条记录
+                this.page.totalPage = data.totalPage; //获取有多少页
+            }.bind(this)); //bind是改变当前函数内部this的指向，将传递给UserApi.query的第二个参数;回调函数的内部this改成本 vue实例的this
+        },
+        search: function(i) {
+            this.query.page = i ? i : 1;
+            var goRouter = PopDesign.assist.isGoRouter(this.query); //获取是否应该走路由的策略，false不走；true走起
+            if (goRouter) {
+                this.$router.go({
+                    path: PopDesign.assist.getRouterPath(), //获取当前路由地址
+                    query: PopDesign.assist.filterEmptyQuery(this.query) //整理当前的查询对象query，把为空的查询对象过滤掉
+                });
+            } else {
+                this.loadTable();
+            }
+        },
+        getSelected: function(selected) {
+            this.selected = selected;
+        }
+    }
+};
+
+</script>
+<!-- <script src="js/stat/stat-api.js" type="text/javascript"></script> -->
+<script type="text/javascript">
+(function(root, $http) {
+    var api = {};
+    api.statUri = "api/stat";
+    api.query = function(query, func1, func2) {
+        var paramStr = "";
+        for (var i in query) {
+            query[i] ? paramStr += "&" + i + "=" + encodeURIComponent(query[i]) : null;
+        }
+        paramStr = "/?" + paramStr.substr(1);
+        $http.get(api.statUri + paramStr).then(function(response) {
+            func1(response.data);
+        }, function(response) {
+            if (func2) func2(response);
+        });
+    };
+    api.cols = function(func1, func2) {
+        $http.get(api.statUri + "/cols").then(function(response) {
+            func1(response.body);
+        }, function(response) {
+            if (func2) func2(response);
+        });
+    };
+    api.categories = function(func1, func2) {
+        $http.get(api.statUri + "/categories").then(function(response) {
+            func1(response.body);
+        }, function(response) {
+            if (func2) func2(response);
+        });
+    };
+    root.StatApi = api;
+})(window, Vue.http);
+
+</script>
+<!-- <script src="js/stat/stat-router.js" type="text/javascript"></script> -->
+<script type="text/javascript">
+Vue.config.devtools = true;
+Vue.config.debug = true;
+var router = new VueRouter({});
+router.map({
+    '/': {
+        component: app.list
+    }
+});
+var app = Vue.extend({});
+router.start(app, '#app');
+
+</script>

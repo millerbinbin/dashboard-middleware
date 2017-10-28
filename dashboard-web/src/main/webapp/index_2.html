@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>template</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="dns-prefetch" href="//static.360buyimg.com"/>
+    <link rel="icon" href="//www.jd.com/favicon.ico" mce_href="//www.jd.com/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="//static.360buyimg.com/shop/pop_man_uibase/css/base.css"
+          source="combo"/>
+    <script type="text/javascript" src="http://misc.360buyimg.com/jdf/??1.0.0/unit/base/1.0.0/base.js"></script>
+    <script type="text/javascript" src="http://static.360buyimg.com/popd/js/resourceloader.js"></script>
+    <script type="text/javascript" src="https://static.360buyimg.com/popd/popd_common/pop-design.min.js"></script>
+    <script src="js/user/user-loading.js" type="text/javascript"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flat-ui.min.js"></script>
+    <link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/flat-ui.min.css" rel="stylesheet">
+    <style type="text/css">
+	    form{
+	      padding-bottom: 10px
+		}
+		.demo-carousel{
+		  height: 200px;
+		  text-align: center;
+		  color:#fff;
+		  font-size:20px;
+		  background:#506b9e;
+		}
+
+    </style>
+</head>
+
+<body>
+<template id="list">
+    <p-form v-ref:query label-position="right" :rules="ruleValidate" :label-width="80" :model="query"
+            @on-form-submit="search(null)">
+        <p-row :gutter="10">
+            <p-col span="8">
+                <p-form-item label="姓名：">
+                    <p-input type="text" :value.sync="query.name" placeholder="请输入姓名" :maxlength="20"></p-input>
+                </p-form-item>
+            </p-col>
+            <p-col span="8">
+                <p-form-item label="年龄：" rule-key="age" :value="query.age">
+                    <p-input :value.sync="query.age" placeholder="请输入年龄" :maxlength="3"></p-input>
+                </p-form-item>
+            </p-col>
+            <p-col span="8">
+                <p-form-item label="地址：">
+                    <p-input :value.sync="query.addr" placeholder="请输入地址" :maxlength="50"></p-input>
+                </p-form-item>
+            </p-col>
+        </p-row>
+        <p-row>
+            <p-col span="24" style="text-align: center;">
+                <p-button type="primary" :html-type="'submit'">查询</p-button>
+                <p-button type="primary" v-link="'/add'">新增</p-button>
+            </p-col>
+        </p-row>
+    </p-form>
+    <p-table border :columns="columns" :data="page.content" :size="small" :height="400"
+             @on-selection-change="getSelected">
+        <p slot="footer">
+            {{selected|json}}
+        </p>
+    </p-table>
+    <p-page :total="page.totalElements" :current.sync="query.page" @on-change="search" @on-page-size-change="search(1)"
+            :page-size.sync="query.pageSize"></p-page>
+</template>
+<template id="edit">
+    <p-row>
+        <p-col span="12">
+            <p-form v-ref:user :rules="ruleValidate" :label-width="80" @submit="save">
+                <p-form-item label="姓名" rule-key="name" :value.sync="user.name">
+                    <p-input :value.sync="user.name" placeholder="请输入姓名" :maxlength="20"></p-input>
+                </p-form-item>
+                <p-form-item label="年龄" required>
+                    <p-input-number :value.sync="user.age" :min="1" placeholder="请输入年龄"></p-input-number>
+                </p-form-item>
+                <p-form-item label="地址" rule-key="addr" :value.sync="user.addr">
+                    <p-input :value.sync="user.addr" placeholder="请输入地址" :maxlength="50"></p-input>
+                </p-form-item>
+                <p-form-item>
+                    <p-button type="primary" :html-type="'submit'">提交</p-button>
+                    <p-button type="ghost" @click="goback" style="margin-left: 8px">返回</p-button>
+                </p-form-item>
+            </p-form>
+        </p-col>
+    </p-row>
+</template>
+<template id="add"
+">
+<p-row>
+    <p-col span="12">
+        <p-form v-ref:user :rules="ruleValidate" :label-width="80" @submit="save">
+            <p-form-item label="姓名" rule-key="name" :value.sync="user.name">
+                <p-input :value.sync="user.name" placeholder="请输入姓名" :maxlength="20"></p-input>
+            </p-form-item>
+            <p-form-item label="年龄" rule-key="age">
+                <p-input :value.sync="user.age" :min="1" placeholder="请输入年龄"></p-input>
+            </p-form-item>
+            <p-form-item label="地址" rule-key="addr" :value.sync="user.addr">
+                <p-input :value.sync="user.addr" placeholder="请输入地址" :maxlength="50"></p-input>
+            </p-form-item>
+            <p-form-item>
+                <p-button type="primary" :html-type="'submit'">提交</p-button>
+                <p-button type="ghost" @click="goback" style="margin-left: 8px">返回</p-button>
+            </p-form-item>
+        </p-form>
+    </p-col>
+</p-row>
+</template>
+<div id="app">
+    <router-view></router-view>
+</div>
+</div>
+
+</body>
+
+</html>
+<!--<script src="js/user/user-components.js" type="text/javascript"></script>-->
+<script>
+new Vue({
+    el: "body"
+})
+    var app = {};
+
+app.user_col = [{
+    type: 'selection',
+    width: 60
+}, {
+	title: '姓名',
+	key: 'name',
+	align: 'left',
+	sortable: true,
+	render: function(row, column, index) {
+	    return '<p-icon type="person"></p-icon>'+ row.name;
+	}
+}, {
+	title: '年龄',
+	key: 'age',
+    sortable: true
+}, {
+	title: '地址',
+	key: 'addr',
+	sortable: true
+}];
+
+app.list = {
+	template: "#list",
+	route: {
+		data: function(transition) {
+			var q = this.$route.query; //获取url里面的路由查询对象"page=1&pageSize=10"==>>{page:"1",pageSize:"10"}
+			this.query.age = q.age ? q.age * 1 : "";
+			this.query.name = q.name ? q.name : "";
+			this.query.addr = q.addr ? q.addr : "";
+			this.query.pageSize = q.pageSize ? q.pageSize * 1 : 10;
+			this.query.page = q.page ? q.page * 1 : 1;
+			this.loadData();
+		}
+	},
+	data: function() {
+		return {
+		    selected: [],
+			columns: app.user_col,
+			query: { //分页查询
+				age: 1,
+				name: "",
+				addr: "",
+				pageSize: 10, //每页显示多少条
+				page: 1
+			},
+			ruleValidate: { //表单验证器
+				age: [{
+					pattern: /^[1-9]\d*$/, //年龄只能是数字
+					message: '请输入数字' //验证失败提示信息
+				}],
+			},
+			page: { //分页
+				totalElements: 0,
+				content: [],
+				totalPage: 0
+			}
+		}
+	},
+	methods: {
+		loadData: function() {
+			UserApi.query(this.query, function(data) { //请见user-api.js
+				this.page.content = data.content; //获取本页list内容
+				this.page.totalElements = data.totalElements; //获取共计有多少条记录
+				this.page.totalPage = data.totalPage; //获取有多少页
+			}.bind(this)); //bind是改变当前函数内部this的指向，将传递给UserApi.query的第二个参数;回调函数的内部this改成本 vue实例的this
+		},
+		search: function(i) {
+			this.query.page = i ? i : 1;
+			var goRouter = PopDesign.assist.isGoRouter(this.query); //获取是否应该走路由的策略，false不走；true走起
+			if(goRouter) {
+				this.$router.go({
+					path: PopDesign.assist.getRouterPath(), //获取当前路由地址
+					query: PopDesign.assist.filterEmptyQuery(this.query) //整理当前的查询对象query，把为空的查询对象过滤掉
+				});
+			} else {
+				this.loadData();
+			}
+		},
+		deleteOne: function(id) {
+			UserApi.deleteUser(id, function(data) {
+				this.$Message.success('删除成功！'); //成功提示信息
+				this.loadData();
+			}.bind(this), function(data) {
+				this.$Message.error(data.data.msg); //失败提示信息
+			}.bind(this));
+		},
+        getSelected: function(selected) {
+          this.selected = selected;
+        },
+        testClick: function(name){
+            this.$refs[name].resetFields();
+        }
+	}
+};
+
+app.edit = {
+	template: "#edit",
+	route: {
+		data: function(transition) {
+			var q = this.$route.query;
+			console.log(this.$route);
+			this.user.id = q.id ? q.id : "";
+			this.getUser();
+		}
+	},
+	data: function() {
+		return {
+			user: {
+				id: "",
+				name: '',
+				age: 1,
+				addr: ""
+			},
+			ruleValidate: { //表单验证器
+				name: [{
+					required: true,
+					message: '姓名不能为空',
+				}],
+				addr: [{
+					required: true,
+					message: '地址不能为空',
+				}]
+			}
+		}
+	},
+	methods: {
+		getUser: function() {
+			UserApi.queryUser(this.user.id, function(data) {
+				this.user = data;
+			}.bind(this));
+		},
+		save: function() {
+			this.$refs.user.validate(function(valid) {
+				if(valid) {
+					UserApi.updateUser(this.user, function(data) {
+						this.$Message.success('提交成功!');
+						this.goback();
+					}.bind(this), function(data) {
+						for(var i in data.data.errors) {
+							var row = data.data.errors[i];
+							this.$refs.user.setError(row.field, row.msg);
+						}
+					}.bind(this));
+
+				}
+			}.bind(this));
+		},
+		goback: function() {
+			history.back(-1);
+		}
+	}
+};
+
+app.add = {
+	template: "#add",
+	route: {
+		data: function(transition) {
+			var q = this.$route.query;
+			console.log(this.$route);
+		}
+	},
+	data: function() {
+		return {
+			user: {
+				id: "",
+				name: '',
+				age: '',
+				addr: ""
+			},
+			ruleValidate: { //表单验证器
+				name: [{
+					required: true,
+					message: '姓名不能为空',
+				}],
+				age: [{
+					pattern: /^[1-9]\d*$/, //年龄只能是数字
+					message: '请输入数字' //验证失败提示信息
+				}],
+				addr: [{
+					required: true,
+					message: '地址不能为空',
+				}]
+			}
+		}
+	},
+	methods: {
+		save: function() {
+			this.$refs.user.validate(function(valid) {
+				if(valid) {
+					UserApi.addUser(this.user, function(data) {
+						this.$Message.success('提交成功!');
+						this.goback();
+					}.bind(this), function(data) {
+						for(var i in data.data.errors) {
+							var row = data.data.errors[i];
+							this.$refs.user.setError(row.field, row.msg);
+						}
+					}.bind(this));
+
+				}
+			}.bind(this));
+		},
+		goback: function() {
+			history.back(-1);
+		}
+	}
+};
+
+
+</script>
+<script src="js/user/user-api.js" type="text/javascript"></script>
+<script src="js/user/user-router.js" type="text/javascript"></script>
