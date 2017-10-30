@@ -3,15 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.fresh.hydra</groupId>
-	<artifactId>hydra-center</artifactId>
+	<groupId>com.jd.logistics.cloud.data</groupId>
+	<artifactId>dashboard-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<modules>
-		<module>hydra-center-commons</module>
-		<module>hydra-center-domain-service</module>
-		<module>hydra-man-web</module>
-		<!--<module>hydra-center-remote-service</module>-->
+		<module>dashboard-commons</module>
+		<module>dashboard-domain-service</module>
+		<module>dashboard-web</module>
+		<!--<module>dashboard-remote-service</module>-->
 	</modules>
 	
 	
