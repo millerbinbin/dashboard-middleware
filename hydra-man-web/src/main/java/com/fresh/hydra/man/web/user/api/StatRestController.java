@@ -59,9 +59,13 @@ public class StatRestController implements StatApi{
     @Override
     public ResponseEntity<?> login(@RequestBody User user) {
         Errors.Builder errorsBuilder = new Errors.Builder();
+        if(!"admin".equalsIgnoreCase(user.getUsername())) {
+            errorsBuilder.addFieldError("username", "用户名不存在！");
+            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
+        }
         if(!"admin".equalsIgnoreCase(user.getPassword())) {
-            errorsBuilder.addFieldError("password", "密码错误");
-            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.BAD_REQUEST);
+            errorsBuilder.addFieldError("password", "密码不正确！");
+            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
