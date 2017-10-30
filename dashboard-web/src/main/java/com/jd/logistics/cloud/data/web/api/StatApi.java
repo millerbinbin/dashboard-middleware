@@ -73,4 +73,9 @@ public interface StatApi {
             method = RequestMethod.GET)
     List<ChartRes> getCharts();
 
+    @RequestMapping(value = "/func/{type}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    List<Function> getFunction(@PathVariable("type") String type);
+
 }

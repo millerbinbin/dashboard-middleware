@@ -145,10 +145,16 @@ public class StatServiceImpl implements StatService {
         return tmp;
     }
 
+    @Override
+    public List<Function> getFunctions(String type) {
+        return GenStatService.getFunctionList();
+    }
+
     public static void main(String[] args) {
         StatServiceImpl ss = new StatServiceImpl();
         System.out.println(ss.getPeriods());
         System.out.println(ss.getCharts().get(0));
+        System.out.println(ss.getFunctions(""));
         //System.out.println(GenStatService.statList);
     }
 }

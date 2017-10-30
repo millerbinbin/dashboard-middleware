@@ -86,4 +86,9 @@ public class StatRestController implements StatApi {
         return statService.getCharts();
     }
 
+    @Override
+    public List<Function> getFunction(@PathVariable("type") String type) {
+        return statService.getFunctions(type);
+    }
+
 }

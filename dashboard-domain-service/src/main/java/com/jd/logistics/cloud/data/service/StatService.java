@@ -31,4 +31,6 @@ public interface StatService {
     List<BoxRes> getBoxes();
 
     List<ChartRes> getCharts();
+
+    List<Function> getFunctions(String type);
 }
