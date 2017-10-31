@@ -9,45 +9,44 @@ import java.io.Serializable;
  */
 @Data
 public class Function implements Serializable{
-    public enum FuncType {
-        BOX(0), CHART(1), FREE(2);
-        private int index;
-        FuncType(int index) {
-            this.index = index;
-        }
-        public static FuncType getFuncType(int index) {
-            switch (index) {
-                case 0:
-                    return FuncType.BOX;
-                case 1:
-                    return FuncType.CHART;
-                case 2:
-                    return FuncType.FREE;
-            }
-            return FuncType.BOX;
-        }
-    }
+    private static final long serialVersionUID = -3908221732001318230L;
+    //    public enum FuncType {
+//        BOX(0), CHART(1), FREE(2);
+//        private int index;
+//        FuncType(int index) {
+//            this.index = index;
+//        }
+//        public static FuncType getFuncType(int index) {
+//            switch (index) {
+//                case 0:
+//                    return FuncType.BOX;
+//                case 1:
+//                    return FuncType.CHART;
+//                case 2:
+//                    return FuncType.FREE;
+//            }
+//            return FuncType.BOX;
+//        }
+//    }
+    private int id;
     private String funcName;
-    private FuncType funcType;
+    private int funcType; // BOX(0), CHART(1), FREE(2);
+    private int seq;
 
-    public Function(String funcName, FuncType funcType) {
-        this.funcName = funcName;
-        this.funcType = funcType;
-    }
-
-    public String getFuncName() {
-        return funcName;
-    }
-
-    public void setFuncName(String funcName) {
-        this.funcName = funcName;
-    }
-
-    public FuncType getFuncType() {
-        return funcType;
-    }
-
-    public void setFuncType(FuncType funcType) {
-        this.funcType = funcType;
-    }
+//    public String getFuncName() {
+//        return funcName;
+//    }
+//
+//    public void setFuncName(String funcName) {
+//        this.funcName = funcName;
+//    }
+//
+//    public int getFuncType() {
+//        return funcType;
+//    }
+//
+//    public void setFuncType(int funcType) {
+//        this.funcType = funcType;
+//    }
+//
 }

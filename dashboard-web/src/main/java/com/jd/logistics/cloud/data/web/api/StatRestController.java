@@ -57,26 +57,6 @@ public class StatRestController implements StatApi {
     }
 
     @Override
-    public ResponseEntity<?> login(@RequestBody User user) {
-        Errors.Builder errorsBuilder = new Errors.Builder();
-        if(!"admin".equalsIgnoreCase(user.getUsername())) {
-            errorsBuilder.addFieldError("username", "用户名不存在！");
-            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
-        }
-        if(!"admin".equalsIgnoreCase(user.getPassword())) {
-            errorsBuilder.addFieldError("password", "密码不正确！");
-            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Override
-    public User user(@PathVariable("id") long id) {
-        return statService.getUser(id);
-    }
-
-    @Override
     public List<BoxRes> getBoxes() {
         return statService.getBoxes();
     }
@@ -87,8 +67,9 @@ public class StatRestController implements StatApi {
     }
 
     @Override
-    public List<Function> getFunction(@PathVariable("type") String type) {
-        return statService.getFunctions(type);
+    public List<GenericRes> getRes(@RequestBody DimQuery query) {
+        return statService.getRes(query);
     }
+
 
 }

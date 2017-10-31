@@ -26,11 +26,9 @@ public interface StatService {
 
     List<List<Double>> getColumns();
 
-    User getUser(long id);
-
     List<BoxRes> getBoxes();
 
     List<ChartRes> getCharts();
 
-    List<Function> getFunctions(String type);
+    List<GenericRes> getRes(DimQuery query);
 }

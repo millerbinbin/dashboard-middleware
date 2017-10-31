@@ -1,7 +1,11 @@
 package com.jd.logistics.cloud.data.repository;
 
+import com.jd.logistics.cloud.data.domain.DimQuery;
+import com.jd.logistics.cloud.data.domain.GenericRes;
 import com.jd.logistics.cloud.data.domain.User;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  * @Author hubin
@@ -10,18 +14,10 @@ import org.apache.ibatis.annotations.*;
  */
 @Mapper
 public interface UserRepository {
-    @Insert("INSERT into T_USER (name,age,addr) VALUES(#{name}, #{age}, #{addr})")
-    void add(User user);
-
     @Select("SELECT * FROM T_USER WHERE id = #{id}")
     User getById(@Param("id") Long id);
 
-    @Select("SELECT * FROM T_USER WHERE name = #{name}")
-    User getByName(@Param("name") String name);
+    @Select("SELECT * FROM T_USER WHERE username = #{username}")
+    User getByName(@Param("username") String username);
 
-    @Update("UPDATE T_USER SET name=#{user.name}, age=#{user.age}, addr=#{user.addr} WHERE id=#{user.id}")
-    void update(@Param("user") User user);
-
-    @Delete("DELETE FROM T_USER WHERE id =#{id}")
-    void delete(@Param("id") Long id);
 }

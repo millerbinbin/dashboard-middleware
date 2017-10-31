@@ -53,16 +53,6 @@ public interface StatApi {
             method = RequestMethod.GET)
     List<List<Double>> cAll();
 
-    @RequestMapping(value = "/login",
-            produces = { "application/json" },
-            method = RequestMethod.POST)
-    ResponseEntity<?> login(@Valid @RequestBody User user);
-
-    @RequestMapping(value = "/user/{id}",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
-    User user(@PathVariable("id") long id);
-
     @RequestMapping(value = "/boxinfo",
             produces = { "application/json" },
             method = RequestMethod.GET)
@@ -73,9 +63,9 @@ public interface StatApi {
             method = RequestMethod.GET)
     List<ChartRes> getCharts();
 
-    @RequestMapping(value = "/func/{type}",
+    @RequestMapping(value = "/res",
             produces = { "application/json" },
-            method = RequestMethod.GET)
-    List<Function> getFunction(@PathVariable("type") String type);
+            method = RequestMethod.POST)
+    List<GenericRes> getRes(@Valid @RequestBody DimQuery query);
 
 }

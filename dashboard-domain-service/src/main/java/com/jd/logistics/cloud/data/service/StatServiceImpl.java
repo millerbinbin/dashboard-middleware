@@ -5,12 +5,14 @@ package com.jd.logistics.cloud.data.service;
 import com.jd.logistics.cloud.data.commons.page.Page;
 import com.jd.logistics.cloud.data.commons.page.PageRequest;
 import com.jd.logistics.cloud.data.domain.*;
+import com.jd.logistics.cloud.data.repository.StatRepository;
 import com.jd.logistics.cloud.data.repository.UserRepository;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -21,7 +23,7 @@ import java.util.*;
 @Service
 public class StatServiceImpl implements StatService {
     @Autowired
-    UserRepository userRepository;
+    StatRepository statRepository;
     @Override
     public Page<Stat> findStats(StatQuery query, PageRequest pageRequest) {
         List<Stat> statList = GenStatService.getStatList(pageRequest.getPageSize(), (int) pageRequest.getOffset());
@@ -116,11 +118,6 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public User getUser(long id) {
-        return userRepository.getById(id);
-    }
-
-    @Override
     public List<BoxRes> getBoxes() {
         List<BoxRes> tmp = new ArrayList<>();
         BoxRes b1 = new BoxRes("接收订单量", "519,245", "日环比", 3.2, "周环比", 7.1);
@@ -146,15 +143,17 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<Function> getFunctions(String type) {
-        return GenStatService.getFunctionList();
+    public List<GenericRes> getRes(DimQuery query) {
+        return statRepository.getRes(query);
     }
 
     public static void main(String[] args) {
         StatServiceImpl ss = new StatServiceImpl();
         System.out.println(ss.getPeriods());
         System.out.println(ss.getCharts().get(0));
-        System.out.println(ss.getFunctions(""));
+        DecimalFormat df = new DecimalFormat("###,##0.00");
+        double d = 0.777;
+        System.out.println(df.format(d*100)+"%");
         //System.out.println(GenStatService.statList);
     }
 }
