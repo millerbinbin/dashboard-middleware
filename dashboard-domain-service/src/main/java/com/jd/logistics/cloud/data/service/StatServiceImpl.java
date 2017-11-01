@@ -118,31 +118,6 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<BoxRes> getBoxes() {
-        List<BoxRes> tmp = new ArrayList<>();
-        BoxRes b1 = new BoxRes("接收订单量", "519,245", "日环比", 3.2, "周环比", 7.1);
-        BoxRes b2 = new BoxRes("SKU准确率", "58.21%", "日环比", 1.9, "周环比", -1.2);
-        BoxRes b3 = new BoxRes("调拨入库单数", "2,245", "日环比", 0.0, "周环比", 10.1);
-        tmp.add(b1);tmp.add(b2);tmp.add(b3);
-        return tmp;
-    }
-
-    @Override
-    public List<ChartRes> getCharts() {
-        List<ChartRes> tmp = new ArrayList<>();
-        ChartRes b1 = new ChartRes("人效-DO", "5234", "日环比", 8.2, "周环比", 17.1, "2017/10/11", "2017/11/11");
-        b1.setPeriods(getPeriods());
-        b1.setC1Value(getColumn("1"));
-        b1.setC2Value(getColumn("2"));
-        ChartRes b2 = new ChartRes("出库单数", "4,245", "日环比", 6.2, "周环比", -1.1,"2017/10/11","2017/11/11");
-        b2.setPeriods(getPeriods());
-        b2.setC1Value(getColumn("3"));
-        b2.setC2Value(getColumn("4"));
-        tmp.add(b1);tmp.add(b2);
-        return tmp;
-    }
-
-    @Override
     public List<GenericRes> getBoxRes(DimQuery query) {
         List<GenericRes> resList = new ArrayList<>();
         for (String funcName: query.getFuncNameList()){
@@ -191,7 +166,6 @@ public class StatServiceImpl implements StatService {
     public static void main(String[] args) {
         StatServiceImpl ss = new StatServiceImpl();
         System.out.println(ss.getPeriods());
-        System.out.println(ss.getCharts().get(0));
         DecimalFormat df = new DecimalFormat("###,##0.00");
         double d = 0.777;
         System.out.println(df.format(d*100)+"%");

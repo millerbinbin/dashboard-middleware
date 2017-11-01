@@ -57,16 +57,6 @@ public class StatRestController implements StatApi {
     }
 
     @Override
-    public List<BoxRes> getBoxes() {
-        return statService.getBoxes();
-    }
-
-    @Override
-    public List<ChartRes> getCharts() {
-        return statService.getCharts();
-    }
-
-    @Override
     public List<GenericRes> getBoxRes (@RequestBody DimQuery query) {
         return statService.getBoxRes(query);
     }
