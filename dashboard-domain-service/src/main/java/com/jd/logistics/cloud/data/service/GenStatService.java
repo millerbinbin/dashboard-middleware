@@ -62,7 +62,7 @@ public class GenStatService {
                             funcValue = 20000 + r.nextInt(3000) - 1500;
                         for(String index: item.getValue()) {
                             double indexValue;
-                            if(idx<=1) indexValue = funcValue * 0.95;
+                            if(idx<=1) indexValue = funcValue * (r.nextDouble()+0.45);
                             else indexValue = (double)((int)((r.nextDouble()-0.25)*1000))/100;
                             System.out.println(function+','+warehouse+','+item.getKey()+','+tmp_date+','+funcValue+','+index+','+indexValue);
                             idx++;
