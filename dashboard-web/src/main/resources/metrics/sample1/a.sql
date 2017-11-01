@@ -1,0 +1,1 @@
+SELECT '14,300' as v1, 8.8 as v2, -4.3 as v3

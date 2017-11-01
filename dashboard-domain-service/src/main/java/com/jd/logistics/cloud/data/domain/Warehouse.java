@@ -10,8 +10,8 @@ import java.io.Serializable;
  * @Date 2017/10/31 14:38
  */
 @Data
-public class Dim implements Serializable{
+public class Warehouse implements Serializable {
     private static final long serialVersionUID = 8657041672009519925L;
     private long id;
-    private String name;
+    private String warehouseName;
 }

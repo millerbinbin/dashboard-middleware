@@ -1,0 +1,23 @@
+{
+  "charts": [
+    {
+      "name": "chart1",
+      "sql": "e.sql"
+    }
+  ],
+  "name": "sample1",
+  "values": [
+    {
+      "name": "day",
+      "sql": "a.sql"
+    },
+    {
+      "name": "week",
+      "sql": "b.sql"
+    },
+    {
+      "name": "month",
+      "sql": "c.sql"
+    }
+  ]
+}

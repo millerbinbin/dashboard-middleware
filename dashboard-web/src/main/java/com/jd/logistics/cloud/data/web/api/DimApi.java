@@ -1,15 +1,10 @@
 package com.jd.logistics.cloud.data.web.api;
 
-import com.jd.logistics.cloud.data.domain.Dim;
-import com.jd.logistics.cloud.data.domain.Function;
-import com.jd.logistics.cloud.data.domain.GenericRes;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.jd.logistics.cloud.data.domain.DateCycle;
+import com.jd.logistics.cloud.data.domain.Warehouse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -23,11 +18,11 @@ public interface DimApi {
     @RequestMapping(value = "/warehouse",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    List<Dim> getWarehouses();
+    List<Warehouse> getWarehouses();
 
     @RequestMapping(value = "/datecycle",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    List<Dim> getDateCycles();
+    List<DateCycle> getDateCycles();
 
 }

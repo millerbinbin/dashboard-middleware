@@ -1,8 +1,7 @@
 package com.jd.logistics.cloud.data.service;
 
-import com.jd.logistics.cloud.data.domain.Dim;
-import com.jd.logistics.cloud.data.domain.DimQuery;
-import com.jd.logistics.cloud.data.domain.GenericRes;
+import com.jd.logistics.cloud.data.domain.DateCycle;
+import com.jd.logistics.cloud.data.domain.Warehouse;
 import com.jd.logistics.cloud.data.repository.DimRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +18,12 @@ public class DimServiceImpl implements DimService {
     @Autowired
     DimRepository dimRepository;
     @Override
-    public List<Dim> getWarehouses() {
+    public List<Warehouse> getWarehouses() {
         return dimRepository.getWarehouses();
     }
 
     @Override
-    public List<Dim> getDateCycles() {
+    public List<DateCycle> getDateCycles() {
         return dimRepository.getDateCycles();
     }
 

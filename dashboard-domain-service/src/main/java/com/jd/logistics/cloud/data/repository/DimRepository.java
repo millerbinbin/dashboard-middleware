@@ -1,13 +1,9 @@
 package com.jd.logistics.cloud.data.repository;
 
-import com.jd.logistics.cloud.data.domain.Dim;
-import com.jd.logistics.cloud.data.domain.DimQuery;
-import com.jd.logistics.cloud.data.domain.Function;
-import com.jd.logistics.cloud.data.domain.GenericRes;
+import com.jd.logistics.cloud.data.domain.DateCycle;
+import com.jd.logistics.cloud.data.domain.Warehouse;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,10 +14,10 @@ import java.util.List;
  */
 @Mapper
 public interface DimRepository {
-    @Select("SELECT * FROM T_WAREHOUSE")
-    List<Dim> getWarehouses();
+    @Select("SELECT id, warehouse_name as warehouseName FROM T_WAREHOUSE")
+    List<Warehouse> getWarehouses();
 
-    @Select("SELECT * FROM T_DATECYCLE")
-    List<Dim> getDateCycles();
+    @Select("SELECT id, date_cycle as dateCycle FROM T_DATE_CYCLE")
+    List<DateCycle> getDateCycles();
 
 }
