@@ -29,9 +29,21 @@ public interface StatRepository {
             "<if test='query.warehouse != null'> AND WAREHOUSE_NAME=#{query.warehouse}</if>" +
             "<if test='query.funcName != null'> AND FUNC_NAME=#{query.funcName}</if>" +
             "<if test='query.dateCycle != null'> AND DATE_CYCLE=#{query.dateCycle}</if>" +
-            "<if test='query.dateStart != null and query.dateEnd != null'> AND STAT_DATE between #{query.dateStart} and #{query.dateEnd}</if>" +
+            "<if test='query.statDate != null'> AND STAT_DATE=#{query.statDate}</if>" +
             " GROUP BY FUNC_NAME, FUNC_VALUE, STAT_DATE" +
             "</script>"
     )
-    List<GenericRes> getRes(@Param("query")DimQuery query);
+    GenericRes getOneRes(@Param("query")DimQuery query); // one row result (warehouse, funcName, statDate)
+
+    @Select("<script>" +
+            "SELECT FUNC_NAME as funcName, FUNC_VALUE as funcValue, STAT_DATE as statDate " +
+            " FROM T_RESULT where 1=1" +
+            "<if test='query.warehouse != null'> AND WAREHOUSE_NAME=#{query.warehouse}</if>" +
+            "<if test='query.funcName != null'> AND FUNC_NAME=#{query.funcName}</if>" +
+            "<if test='query.dateCycle != null'> AND DATE_CYCLE=#{query.dateCycle}</if>" +
+            "<if test='query.dateStart != null and query.dateEnd != null'> AND STAT_DATE between #{query.dateStart} and #{query.dateEnd}</if>" +
+            " GROUP BY FUNC_NAME, FUNC_VALUE, STAT_DATE ORDER BY STAT_DATE" +
+            "</script>"
+    )
+    List<GenericRes> getResList(@Param("query")DimQuery query); // mutiple row results (warehouse, funcName, statDate)
 }

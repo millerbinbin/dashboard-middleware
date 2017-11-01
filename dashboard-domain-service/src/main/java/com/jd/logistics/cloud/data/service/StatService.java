@@ -30,5 +30,7 @@ public interface StatService {
 
     List<ChartRes> getCharts();
 
-    List<GenericRes> getRes(DimQuery query);
+    List<GenericRes> getBoxRes(DimQuery query);
+
+    List<GenericRes> getChartRes(DimQuery query);
 }

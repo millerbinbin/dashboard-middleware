@@ -63,9 +63,14 @@ public interface StatApi {
             method = RequestMethod.GET)
     List<ChartRes> getCharts();
 
-    @RequestMapping(value = "/res",
+    @RequestMapping(value = "/res/box",
             produces = { "application/json" },
             method = RequestMethod.POST)
-    List<GenericRes> getRes(@Valid @RequestBody DimQuery query);
+    List<GenericRes> getBoxRes(@Valid @RequestBody DimQuery query);
+
+    @RequestMapping(value = "/res/chart",
+            produces = { "application/json" },
+            method = RequestMethod.POST)
+    List<GenericRes> getChartRes(@Valid @RequestBody DimQuery query);
 
 }

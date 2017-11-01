@@ -143,9 +143,50 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<GenericRes> getRes(DimQuery query) {
-        return statRepository.getRes(query);
+    public List<GenericRes> getBoxRes(DimQuery query) {
+        List<GenericRes> resList = new ArrayList<>();
+        for (String funcName: query.getFuncNameList()){
+            DimQuery q = new DimQuery();
+            q.setFuncName(funcName);
+            q.setWarehouse(query.getWarehouse());
+            q.setDateCycle(query.getDateCycle());
+            q.setStatDate(query.getStatDate());
+            q.setDateStart(query.getDateStart());
+            q.setDateEnd(query.getDateEnd());
+            GenericRes res = statRepository.getOneRes(q);
+            if (res == null) continue;
+            resList.add(res);
+        }
+        return resList;
     }
+
+    @Override
+    public List<GenericRes> getChartRes(DimQuery query) {
+        List<GenericRes> resList = new ArrayList<>();
+        for (String funcName: query.getFuncNameList()){
+            DimQuery q = new DimQuery();
+            q.setFuncName(funcName);
+            q.setWarehouse(query.getWarehouse());
+            q.setDateCycle(query.getDateCycle());
+            q.setStatDate(query.getStatDate());
+            q.setDateStart(query.getDateStart());
+            q.setDateEnd(query.getDateEnd());
+            GenericRes resInfo = statRepository.getOneRes(q);
+            if (resInfo == null) continue;
+            List<GenericRes> resDetail = statRepository.getResList(q);
+            List<String> p = new ArrayList<>();
+            List<Double> v1 = new ArrayList<>();
+            for(GenericRes r : resDetail) {
+                p.add(r.getStatDate());
+                v1.add(r.getFuncValue());
+            }
+            resInfo.setP(p);
+            resInfo.setV1(v1);
+            resList.add(resInfo);
+        }
+        return resList;
+    }
+
 
     public static void main(String[] args) {
         StatServiceImpl ss = new StatServiceImpl();
