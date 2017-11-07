@@ -1,4 +1,4 @@
-package com.jd.logistics.cloud.data.service;
+package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.domain.User;
 import com.jd.logistics.cloud.data.repository.UserRepository;

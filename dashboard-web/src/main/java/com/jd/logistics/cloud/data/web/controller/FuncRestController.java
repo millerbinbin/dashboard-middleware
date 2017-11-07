@@ -1,7 +1,8 @@
-package com.jd.logistics.cloud.data.web.api;
+package com.jd.logistics.cloud.data.web.controller;
 
 import com.jd.logistics.cloud.data.domain.Function;
 import com.jd.logistics.cloud.data.service.FuncService;
+import com.jd.logistics.cloud.data.web.api.FuncApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

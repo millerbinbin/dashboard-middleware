@@ -1,4 +1,4 @@
-package com.jd.logistics.cloud.data.service;
+package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.domain.DateCycle;
 import com.jd.logistics.cloud.data.domain.Warehouse;

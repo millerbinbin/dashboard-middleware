@@ -1,9 +1,10 @@
-package com.jd.logistics.cloud.data.web.api;
+package com.jd.logistics.cloud.data.web.controller;
 
 import com.jd.logistics.cloud.data.commons.page.Page;
 import com.jd.logistics.cloud.data.commons.page.PageRequest;
 import com.jd.logistics.cloud.data.domain.*;
 import com.jd.logistics.cloud.data.service.StatService;
+import com.jd.logistics.cloud.data.web.api.StatApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;

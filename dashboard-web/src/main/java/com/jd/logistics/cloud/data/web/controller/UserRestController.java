@@ -1,8 +1,9 @@
-package com.jd.logistics.cloud.data.web.api;
+package com.jd.logistics.cloud.data.web.controller;
 
 import com.jd.logistics.cloud.data.commons.validation.Errors;
 import com.jd.logistics.cloud.data.domain.User;
 import com.jd.logistics.cloud.data.service.UserService;
+import com.jd.logistics.cloud.data.web.api.UserApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

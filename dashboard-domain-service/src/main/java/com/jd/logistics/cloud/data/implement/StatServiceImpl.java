@@ -1,4 +1,4 @@
-package com.jd.logistics.cloud.data.service;
+package com.jd.logistics.cloud.data.implement;
 
 
 import com.jd.logistics.cloud.data.commons.GenStatService;
@@ -6,6 +6,7 @@ import com.jd.logistics.cloud.data.commons.page.Page;
 import com.jd.logistics.cloud.data.commons.page.PageRequest;
 import com.jd.logistics.cloud.data.domain.*;
 import com.jd.logistics.cloud.data.repository.StatRepository;
+import com.jd.logistics.cloud.data.service.StatService;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.jd.logistics.cloud.data.service;
+package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.domain.Function;
 import com.jd.logistics.cloud.data.repository.FuncRepository;
