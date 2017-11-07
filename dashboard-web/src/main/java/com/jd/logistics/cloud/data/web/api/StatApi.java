@@ -53,16 +53,6 @@ public interface StatApi {
             method = RequestMethod.GET)
     List<List<Double>> cAll();
 
-    @RequestMapping(value = "/boxinfo",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
-    List<BoxRes> getBoxes();
-
-    @RequestMapping(value = "/chartinfo",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
-    List<ChartRes> getCharts();
-
     @RequestMapping(value = "/res/box",
             produces = { "application/json" },
             method = RequestMethod.POST)
