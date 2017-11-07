@@ -32,6 +32,6 @@ public class PageRequest implements Serializable {
     }
 
     public long getOffset() {
-        return (long)(this.page - 1) * (long)this.pageSize;
+        return (long) (this.page - 1) * (long) this.pageSize;
     }
 }

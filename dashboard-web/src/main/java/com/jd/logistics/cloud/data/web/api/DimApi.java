@@ -12,7 +12,7 @@ import java.util.List;
  * @Description:
  * @Date 2017/10/31 14:41
  */
-@RequestMapping(value="/api/dim")
+@RequestMapping(value = "/api/dim")
 public interface DimApi {
 
     @RequestMapping(value = "/warehouse",

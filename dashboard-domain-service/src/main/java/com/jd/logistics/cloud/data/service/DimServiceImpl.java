@@ -17,6 +17,7 @@ import java.util.List;
 public class DimServiceImpl implements DimService {
     @Autowired
     DimRepository dimRepository;
+
     @Override
     public List<Warehouse> getWarehouses() {
         return dimRepository.getWarehouses();

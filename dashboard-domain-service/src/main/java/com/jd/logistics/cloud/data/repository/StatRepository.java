@@ -47,7 +47,7 @@ public interface StatRepository {
             " GROUP BY FUNC_NAME, STAT_DATE" +
             "</script>"
     )
-    GenericRes getOneRes(@Param("query")DimQuery query); // one row result (warehouse, funcName, statDate)
+    GenericRes getOneRes(@Param("query") DimQuery query); // one row result (warehouse, funcName, statDate)
 
     @Select("<script>" +
             "SELECT FUNC_NAME as funcName, MAX(FUNC_VALUE) as funcValue, STAT_DATE as statDate " +
@@ -59,5 +59,5 @@ public interface StatRepository {
             " GROUP BY FUNC_NAME, STAT_DATE ORDER BY STAT_DATE" +
             "</script>"
     )
-    List<GenericRes> getResList(@Param("query")DimQuery query); // mutiple row results (warehouse, funcName, statDate)
+    List<GenericRes> getResList(@Param("query") DimQuery query); // mutiple row results (warehouse, funcName, statDate)
 }

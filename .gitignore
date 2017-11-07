@@ -13,14 +13,10 @@ target/
 .settings/
 lib/
 logs/
-target/
 bin/
-.DS_Store
 .metadata
 *.log
 *.log.*
-.idea/
-*.iml
 .vagrant/
 .#*
 config_center_client.log

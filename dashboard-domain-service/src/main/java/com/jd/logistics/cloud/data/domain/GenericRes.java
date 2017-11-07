@@ -12,7 +12,7 @@ import java.util.List;
  * @Date 2017/10/31 15:50
  */
 @Data
-public class GenericRes implements Serializable{
+public class GenericRes implements Serializable {
     private static final long serialVersionUID = 1902248647108008231L;
     private String funcName;
     private double funcValue;
@@ -43,15 +43,16 @@ public class GenericRes implements Serializable{
     private List<String> p;
     private List<Double> v1;
     private List<Double> v2;
+
     public String getFuncFormatValue() {
         DecimalFormat df = new DecimalFormat("###,##0");
         DecimalFormat df2 = new DecimalFormat("###,##0.00");
         double tmp = funcValue;
-        if (tmp / 100000 >=1)
-            funcFormatValue = df.format(tmp/1000) + "K";
+        if (tmp / 100000 >= 1)
+            funcFormatValue = df.format(tmp / 1000) + "K";
         else if ((tmp * 10) % 10 == 0) // integer
             funcFormatValue = df.format(tmp);
-        else if (tmp <= 1 ) // 百分比
+        else if (tmp <= 1) // 百分比
             funcFormatValue = df2.format(tmp * 100) + "%";
         else funcFormatValue = df2.format(tmp);
         return funcFormatValue;

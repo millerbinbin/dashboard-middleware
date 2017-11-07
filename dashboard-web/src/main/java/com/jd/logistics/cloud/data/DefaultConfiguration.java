@@ -16,17 +16,17 @@ import org.springframework.context.annotation.PropertySource;
  * 默认的profile是<code>prod</code>，
  * 在开发环境可以使用SpringBoot支持的多种方式来覆盖这个值，比如用VM参数：<code>-Dspring.profiles.active=dev</code>
  * </p>
- *
+ * <p>
  * <p>
  * 每个人想在本地个性化定义一些属性，比如jsf的别名定义成和自己的用户名相关的，
  * 那可以在<code>dev-local.properties</code>文件中定义，它会覆盖<code>dev.properties</code>中定义的值。
  * </p>
- *
+ * <p>
  * <p>
  * <code>important.properties, common.properties和dev-local.properties</code>都不会被添加到git中。
  * </p>
- *
- *
+ * <p>
+ * <p>
  * Created by yanhua on 2016/9/18.
  */
 @Configuration
@@ -40,8 +40,8 @@ public class DefaultConfiguration {
 
     @Configuration
     @Profile("dev")
-    @PropertySource(value = {"classpath:dev.properties", "classpath:dev-local.properties"} ,
-            ignoreResourceNotFound=true)
+    @PropertySource(value = {"classpath:dev.properties", "classpath:dev-local.properties"},
+            ignoreResourceNotFound = true)
     static class Development {
     }
 }

@@ -1,19 +1,19 @@
 package com.jd.logistics.cloud.data.service;
 
 
-
+import com.jd.logistics.cloud.data.commons.GenStatService;
 import com.jd.logistics.cloud.data.commons.page.Page;
 import com.jd.logistics.cloud.data.commons.page.PageRequest;
 import com.jd.logistics.cloud.data.domain.*;
 import com.jd.logistics.cloud.data.repository.StatRepository;
-import com.jd.logistics.cloud.data.repository.UserRepository;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author hubin
@@ -24,10 +24,20 @@ import java.util.*;
 public class StatServiceImpl implements StatService {
     @Autowired
     StatRepository statRepository;
+
+    public static void main(String[] args) {
+        StatServiceImpl ss = new StatServiceImpl();
+        System.out.println(ss.getPeriods());
+        DecimalFormat df = new DecimalFormat("###,##0.00");
+        double d = 0.777;
+        System.out.println(df.format(d * 100) + "%");
+        //System.out.println(GenStatService.statList);
+    }
+
     @Override
     public Page<Stat> findStats(StatQuery query, PageRequest pageRequest) {
         List<Stat> statList = GenStatService.getStatList(pageRequest.getPageSize(), (int) pageRequest.getOffset());
-        Page<Stat> statPage =  new Page<>();
+        Page<Stat> statPage = new Page<>();
         statPage.setPage(pageRequest.getPage());
         statPage.setSize(pageRequest.getPageSize());
         statPage.setTotalElements(GenStatService.count);
@@ -38,39 +48,23 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Col> getCols() {
         List<Col> cols = new ArrayList<>();
-        for(Field f : Stat.class.getDeclaredFields()){
-            if (null != f.getAnnotation(ApiModelProperty.class)){
-                cols.add(new Col(f.getName().toLowerCase(),f.getAnnotation(ApiModelProperty.class).name()));
+        for (Field f : Stat.class.getDeclaredFields()) {
+            if (null != f.getAnnotation(ApiModelProperty.class)) {
+                cols.add(new Col(f.getName().toLowerCase(), f.getAnnotation(ApiModelProperty.class).name()));
             }
-        };
+        }
         return cols;
     }
 
     @Override
     public List<String> getCategories() {
         List<String> categories = new ArrayList<>();
-        for(Field f : Stat.class.getDeclaredFields()){
-            if (null != f.getAnnotation(ApiModelProperty.class) && f.getAnnotation(ApiModelProperty.class).value().equals("")){
+        for (Field f : Stat.class.getDeclaredFields()) {
+            if (null != f.getAnnotation(ApiModelProperty.class) && f.getAnnotation(ApiModelProperty.class).value().equals("")) {
                 categories.add(f.getAnnotation(ApiModelProperty.class).name());
             }
-        };
-        return categories;
-    }
-
-    @Override
-    public double[] getRow(String date) {
-        double[] d = new double[4];
-        for (int i = 0; i < GenStatService.statList.size(); i++) {
-            Stat tmp = GenStatService.statList.get(i);
-            if (date.equalsIgnoreCase(tmp.getD1())){
-                d[0] = tmp.getC1();
-                d[1] = tmp.getC2();
-                d[2] = tmp.getC3();
-                d[3] = tmp.getC4();
-                return d;
-            }
         }
-        return null;
+        return categories;
     }
 
     @Override
@@ -118,9 +112,25 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
+    public double[] getRow(String date) {
+        double[] d = new double[4];
+        for (int i = 0; i < GenStatService.statList.size(); i++) {
+            Stat tmp = GenStatService.statList.get(i);
+            if (date.equalsIgnoreCase(tmp.getD1())) {
+                d[0] = tmp.getC1();
+                d[1] = tmp.getC2();
+                d[2] = tmp.getC3();
+                d[3] = tmp.getC4();
+                return d;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<GenericRes> getBoxRes(DimQuery query) {
         List<GenericRes> resList = new ArrayList<>();
-        for (String funcName: query.getFuncNameList()){
+        for (String funcName : query.getFuncNameList()) {
             DimQuery q = new DimQuery();
             q.setFuncName(funcName);
             q.setWarehouse(query.getWarehouse());
@@ -138,7 +148,7 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<GenericRes> getChartRes(DimQuery query) {
         List<GenericRes> resList = new ArrayList<>();
-        for (String funcName: query.getFuncNameList()){
+        for (String funcName : query.getFuncNameList()) {
             DimQuery q = new DimQuery();
             q.setFuncName(funcName);
             q.setWarehouse(query.getWarehouse());
@@ -151,7 +161,7 @@ public class StatServiceImpl implements StatService {
             List<GenericRes> resDetail = statRepository.getResList(q);
             List<String> p = new ArrayList<>();
             List<Double> v1 = new ArrayList<>();
-            for(GenericRes r : resDetail) {
+            for (GenericRes r : resDetail) {
                 p.add(r.getStatDate());
                 v1.add(r.getFuncValue());
             }
@@ -160,15 +170,5 @@ public class StatServiceImpl implements StatService {
             resList.add(resInfo);
         }
         return resList;
-    }
-
-
-    public static void main(String[] args) {
-        StatServiceImpl ss = new StatServiceImpl();
-        System.out.println(ss.getPeriods());
-        DecimalFormat df = new DecimalFormat("###,##0.00");
-        double d = 0.777;
-        System.out.println(df.format(d*100)+"%");
-        //System.out.println(GenStatService.statList);
     }
 }

@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexViewController {
 
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "welcome";
     }
+
     @RequestMapping(value = "/doc")
     public String doc() {
         return "redirect:swagger-ui.html";

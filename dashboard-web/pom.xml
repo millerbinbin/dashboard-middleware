@@ -14,7 +14,7 @@
     <packaging>war</packaging>
 
     <artifactId>dashboard-web</artifactId>
-	<name>dashboard-web</name>
+    <name>dashboard-web</name>
 
     <dependencyManagement>
         <dependencies>
@@ -26,11 +26,11 @@
                 <scope>import</scope>
             </dependency>
             <!--<dependency>-->
-                <!--<groupId>com.jd.spring.boot</groupId>-->
-                <!--<artifactId>jd-spring-boot-dependencies</artifactId>-->
-                <!--<version>1.0-SNAPSHOT</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
+            <!--<groupId>com.jd.spring.boot</groupId>-->
+            <!--<artifactId>jd-spring-boot-dependencies</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>import</scope>-->
             <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
@@ -52,8 +52,8 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>com.jd.spring.boot</groupId>-->
-            <!--<artifactId>jd-spring-boot-starter-velocity</artifactId>-->
+        <!--<groupId>com.jd.spring.boot</groupId>-->
+        <!--<artifactId>jd-spring-boot-starter-velocity</artifactId>-->
         <!--</dependency>-->
 
         <dependency>
@@ -67,11 +67,11 @@
             <version>2.2.2</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>servlet-api</artifactId>-->
-            <!--<scope>provided</scope>-->
+        <!--<groupId>javax.servlet</groupId>-->
+        <!--<artifactId>servlet-api</artifactId>-->
+        <!--<scope>provided</scope>-->
         <!--</dependency>-->
-     </dependencies>
+    </dependencies>
 
     <build>
         <plugins>

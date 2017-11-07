@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,9 +18,10 @@ import java.util.List;
  * @Date 2017/10/31 10:16
  */
 @RestController
-public class FuncRestController implements FuncApi{
+public class FuncRestController implements FuncApi {
     @Autowired
     FuncService funcService;
+
     @Override
     public List<Function> getFuncByType(@PathVariable("type") int type) {
         return funcService.getFuncByType(type);
@@ -34,7 +34,7 @@ public class FuncRestController implements FuncApi{
 
     @Override
     public ResponseEntity updateFuncType(@Valid @RequestBody List<Function> functionList) {
-        for(Function function : functionList) {
+        for (Function function : functionList) {
             funcService.updateFuncType(function);
         }
         return new ResponseEntity<>(HttpStatus.OK);

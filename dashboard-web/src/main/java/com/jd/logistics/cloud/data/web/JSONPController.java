@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpRespon
  */
 @ControllerAdvice(basePackages = {"com.fresh.hydra.man.web"})
 public class JSONPController extends AbstractJsonpResponseBodyAdvice {
-    public JSONPController(){
-        super("callback","jsonp");
+    public JSONPController() {
+        super("callback", "jsonp");
     }
 }

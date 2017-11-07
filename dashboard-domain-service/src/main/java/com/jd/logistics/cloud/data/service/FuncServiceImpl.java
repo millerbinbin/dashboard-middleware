@@ -16,6 +16,7 @@ import java.util.List;
 public class FuncServiceImpl implements FuncService {
     @Autowired
     FuncRepository funcRepository;
+
     @Override
     public List<Function> getFuncByType(int type) {
         return funcRepository.getByType(type);

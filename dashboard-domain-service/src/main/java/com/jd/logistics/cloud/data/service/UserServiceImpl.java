@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
     @Override
     public User getUserByName(String username) {
         return userRepository.getByName(username);
@@ -21,12 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkPwd(String username, String pwd) {
-        return pwd.equals(userRepository.getByName(username).getPassword()) ? true: false;
+        return pwd.equals(userRepository.getByName(username).getPassword());
     }
 
     @Override
     public boolean checkUser(String username) {
-        return null == getUserByName(username) ? false: true;
+        return null != getUserByName(username);
     }
 
     @Override

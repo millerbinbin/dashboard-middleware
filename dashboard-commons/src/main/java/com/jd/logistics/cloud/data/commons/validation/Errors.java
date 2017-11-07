@@ -29,6 +29,7 @@ public class Errors {
             this.field = field;
         }
     }
+
     private List<Error> errors = new ArrayList();
 
     public Errors() {

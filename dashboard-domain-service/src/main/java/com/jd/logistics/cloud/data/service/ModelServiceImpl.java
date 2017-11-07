@@ -1,5 +1,7 @@
 package com.jd.logistics.cloud.data.service;
 
+import com.jd.logistics.cloud.data.commons.Constants;
+import com.jd.logistics.cloud.data.commons.Helper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,13 +15,13 @@ import java.util.Map;
 @Service
 public class ModelServiceImpl implements ModelService {
     private String getFuncChartFormat(String funcName) {
-        return StringUtils.getStringFromResourcePath(Constant.TEMPLATE_PARENT_FOLDER + "/" +
-                funcName + "/" + Constant.CHART_TEMPLATE_SUFFIX);
+        return Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
+                funcName + "/" + Constants.CHART_TEMPLATE_SUFFIX);
     }
 
     private String getFuncValueFormat(String funcName) {
-        return StringUtils.getStringFromResourcePath(Constant.TEMPLATE_PARENT_FOLDER + "/" +
-                funcName + "/" + Constant.VALUE_TEMPLATE_SUFFIX);
+        return Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
+                funcName + "/" + Constants.VALUE_TEMPLATE_SUFFIX);
     }
 
     @Override

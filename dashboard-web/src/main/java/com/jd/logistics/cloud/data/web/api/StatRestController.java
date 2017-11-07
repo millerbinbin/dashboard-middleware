@@ -2,13 +2,13 @@ package com.jd.logistics.cloud.data.web.api;
 
 import com.jd.logistics.cloud.data.commons.page.Page;
 import com.jd.logistics.cloud.data.commons.page.PageRequest;
-import com.jd.logistics.cloud.data.commons.validation.Errors;
 import com.jd.logistics.cloud.data.domain.*;
 import com.jd.logistics.cloud.data.service.StatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ import java.util.List;
 public class StatRestController implements StatApi {
     @Autowired
     StatService statService;
+
     @Override
     public Page<Stat> list(@ModelAttribute StatQuery query, @ModelAttribute PageRequest pageRequest) {
         return statService.findStats(query, pageRequest);
@@ -57,7 +58,7 @@ public class StatRestController implements StatApi {
     }
 
     @Override
-    public List<GenericRes> getBoxRes (@RequestBody DimQuery query) {
+    public List<GenericRes> getBoxRes(@RequestBody DimQuery query) {
         return statService.getBoxRes(query);
     }
 

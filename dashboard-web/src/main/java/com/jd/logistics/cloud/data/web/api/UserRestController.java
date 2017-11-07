@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController implements UserApi {
     @Autowired
     UserService userService;
+
     @Override
     public ResponseEntity<?> login(@RequestBody User user) {
         Errors.Builder errorsBuilder = new Errors.Builder();
-        if(!userService.checkUser(user.getUsername())) {
+        if (!userService.checkUser(user.getUsername())) {
             errorsBuilder.addFieldError("username", "账户不存在，请重新输入！");
             return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
         }
-        if(!userService.checkPwd(user.getUsername(), user.getPassword())) {
+        if (!userService.checkPwd(user.getUsername(), user.getPassword())) {
             errorsBuilder.addFieldError("password", "密码不正确！");
             return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
         }

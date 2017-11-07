@@ -1,11 +1,11 @@
-package com.jd.logistics.cloud.data.service;
+package com.jd.logistics.cloud.data.commons;
 
 /**
  * @Author hubin
  * @Description:
  * @Date 2017/11/7 9:32
  */
-public class Constant {
+public class Constants {
     public static final String TEMPLATE_PARENT_FOLDER = "metrics";
     public static final String CHART_OPTION_SUFFIX = ".chart.json";
     public static final String CHART_TEMPLATE_SUFFIX = "chart.html";

@@ -14,9 +14,10 @@ import java.util.List;
  * @Date 2017/10/31 14:43
  */
 @RestController
-public class DimRestController implements DimApi{
+public class DimRestController implements DimApi {
     @Autowired
     DimService dimService;
+
     @Override
     public List<Warehouse> getWarehouses() {
         return dimService.getWarehouses();

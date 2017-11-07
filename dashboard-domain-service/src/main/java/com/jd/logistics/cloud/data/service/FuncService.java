@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface FuncService {
     List<Function> getFuncByType(int type);
+
     List<Function> getAllFunc();
+
     void updateFuncType(Function func);
 }

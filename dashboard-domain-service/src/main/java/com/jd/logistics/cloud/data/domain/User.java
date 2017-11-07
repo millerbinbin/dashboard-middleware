@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by yanhua on 2017/1/5.
  */
 @Data
-public class User implements Serializable{
+public class User implements Serializable {
     private static final long serialVersionUID = 3619539590826838447L;
     @ApiModelProperty(value = "", required = true)
     private long id;
@@ -26,6 +26,7 @@ public class User implements Serializable{
     public String getUsername() {
         return username;
     }
+
     public String getPassword() {
         return password;
     }
