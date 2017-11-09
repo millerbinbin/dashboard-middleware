@@ -19,7 +19,7 @@
         color: '#6E88AC'
       }
     },
-    data: res.r_date.slice(-7)
+    data: res.stat_date.slice(-7)
   },
   yAxis: {
     type: 'value',
@@ -41,16 +41,16 @@
         width: 1
       }
     },
-    data: res.metrics_3.slice(-7)
+    data: res.func_value.slice(-7)
   },
   {
-    type: 'line',
+    type: 'bar',
     itemStyle: {
       normal: {
         color: '#6E88AC',
         width: 1
       }
     },
-    data: res.metrics_3.slice(0,7)
+    data: res.func_value.slice(0,7)
   }]
 }

@@ -2,6 +2,7 @@ package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.domain.Function;
 import com.jd.logistics.cloud.data.repository.FuncRepository;
+import com.jd.logistics.cloud.data.service.FuncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,11 +12,15 @@ import java.util.Map;
  * @Description:
  * @Date 2017/11/7 9:18
  */
-@RequestMapping(value = "/api/model")
+@RequestMapping(value = "/api")
 public interface ModelApi {
-    @RequestMapping(value = "/{funcName}",
+    @RequestMapping(value = "/model/{funcName}",
             produces = {"application/json"},
             method = RequestMethod.GET)
     Map getFuncModel(@PathVariable("funcName") String funcName);
 
+    @RequestMapping(value = "/models",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    List<Map> getModels();
 }

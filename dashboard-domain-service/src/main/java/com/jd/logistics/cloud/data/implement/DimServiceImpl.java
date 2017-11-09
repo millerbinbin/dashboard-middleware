@@ -3,6 +3,7 @@ package com.jd.logistics.cloud.data.implement;
 import com.jd.logistics.cloud.data.domain.DateCycle;
 import com.jd.logistics.cloud.data.domain.Warehouse;
 import com.jd.logistics.cloud.data.repository.DimRepository;
+import com.jd.logistics.cloud.data.service.DimService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,6 +2,7 @@ package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.domain.User;
 import com.jd.logistics.cloud.data.repository.UserRepository;
+import com.jd.logistics.cloud.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

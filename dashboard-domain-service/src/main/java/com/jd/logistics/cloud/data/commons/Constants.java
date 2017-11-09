@@ -7,7 +7,7 @@ package com.jd.logistics.cloud.data.commons;
  */
 public class Constants {
     public static final String TEMPLATE_PARENT_FOLDER = "metrics";
-    public static final String CHART_OPTION_SUFFIX = ".chart.json";
+    public static final String CHART_OPTION_SUFFIX = ".option";
     public static final String CHART_TEMPLATE_SUFFIX = "chart.html";
     public static final String VALUE_TEMPLATE_SUFFIX = "number.html";
     public static final String TEMPLATE_MODEL_FILE = "model.json";

@@ -1,23 +1,55 @@
 {
   "charts": [
     {
-      "name": "chart1",
-      "sql": "e.sql"
+      "name": "day",
+      "sql": "e.sql",
+      "params": [
+        {
+          "name": "dateCycle",
+          "value": "天"
+        }
+      ]
+    },
+    {
+      "name": "week",
+      "sql": "e.sql",
+      "params": [
+        {
+          "name": "dateCycle",
+          "value": "周"
+        }
+      ]
+    },
+    {
+      "name": "month",
+      "sql": "e.sql",
+      "params": [
+        {
+          "name": "dateCycle",
+          "value": "月"
+        }
+      ]
     }
   ],
   "name": "sample1",
+  "description": [
+    {
+      "name": "day",
+      "text": "just a test 日维度"
+    },
+    {
+      "name": "week",
+      "text": "just a test 周维度"
+    },
+    {
+      "name": "month",
+      "text": "just a test 月维度"
+    }
+  ],
   "values": [
     {
       "name": "day",
       "sql": "a.sql"
-    },
-    {
-      "name": "week",
-      "sql": "b.sql"
-    },
-    {
-      "name": "month",
-      "sql": "c.sql"
     }
   ]
 }

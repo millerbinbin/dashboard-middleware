@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,5 +23,12 @@ public class ModelRestController implements ModelApi {
     @Override
     public Map getFuncModel(@PathVariable("funcName") String funcName) {
         return modelService.getFuncModel(funcName);
+    }
+
+    @Override
+    public List<Map> getModels() {
+        List<Map> res = new ArrayList<>();
+        res.add(modelService.getFuncModel("sample1"));
+        return res;
     }
 }
