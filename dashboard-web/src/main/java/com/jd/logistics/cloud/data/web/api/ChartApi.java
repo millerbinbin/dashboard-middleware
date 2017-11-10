@@ -13,13 +13,13 @@ import java.util.Map;
  */
 @RequestMapping(value = "/api")
 public interface ChartApi {
-    @RequestMapping(value = "/chart/{funcName}",
+    @RequestMapping(value = "/chart/{funcId}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncChart(@PathVariable("funcName") String funcName);
+    Map getFuncChart(@PathVariable("funcId") String funcId);
 
-    @RequestMapping(value = "/chartOption/{funcName}/{chartName}",
+    @RequestMapping(value = "/chartOption/{funcId}/{chartId}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    String getFuncChartOption(@PathVariable("funcName") String funcName, @PathVariable("chartName") String chartName);
+    String getFuncChartOption(@PathVariable("funcId") String funcId, @PathVariable("chartId") String chartId);
 }

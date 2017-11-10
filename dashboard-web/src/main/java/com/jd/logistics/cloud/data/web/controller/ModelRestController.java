@@ -1,5 +1,7 @@
 package com.jd.logistics.cloud.data.web.controller;
 
+import com.jd.logistics.cloud.data.domain.Function;
+import com.jd.logistics.cloud.data.service.FuncService;
 import com.jd.logistics.cloud.data.service.ModelService;
 import com.jd.logistics.cloud.data.web.api.ModelApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +21,28 @@ import java.util.Map;
 public class ModelRestController implements ModelApi {
     @Autowired
     ModelService modelService;
-
+    @Autowired
+    FuncService funcService;
     @Override
-    public Map getFuncModel(@PathVariable("funcName") String funcName) {
-        return modelService.getFuncModel(funcName);
+    public Map getFuncModel(@PathVariable("funcId") String funcId) {
+        return modelService.getFuncModel(funcId);
     }
 
     @Override
     public List<Map> getModels() {
         List<Map> res = new ArrayList<>();
-        res.add(modelService.getFuncModel("sample1"));
+        for(Function function: funcService.getAllFunc()){
+            res.add(modelService.getFuncModel(function.getId()));
+        }
+        return res;
+    }
+
+    @Override
+    public List<Map> getDesc() {
+        List<Map> res = new ArrayList<>();
+        for(Function function: funcService.getAllFunc()){
+            res.add(modelService.getFuncDesc(function.getId()));
+        }
         return res;
     }
 }

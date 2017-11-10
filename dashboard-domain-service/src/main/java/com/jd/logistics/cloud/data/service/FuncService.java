@@ -15,4 +15,6 @@ public interface FuncService {
     List<Function> getAllFunc();
 
     void updateFuncType(Function func);
+
+    String getFuncNameById(String funcId);
 }

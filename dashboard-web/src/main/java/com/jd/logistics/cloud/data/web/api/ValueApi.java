@@ -13,8 +13,8 @@ import java.util.Map;
  */
 @RequestMapping(value = "/api/value")
 public interface ValueApi {
-    @RequestMapping(value = "/{funcName}",
+    @RequestMapping(value = "/{funcId}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncValues(@PathVariable("funcName") String funcName);
+    Map getFuncValues(@PathVariable("funcId") String funcId);
 }

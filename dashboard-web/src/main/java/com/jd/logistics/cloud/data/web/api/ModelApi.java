@@ -14,13 +14,18 @@ import java.util.Map;
  */
 @RequestMapping(value = "/api")
 public interface ModelApi {
-    @RequestMapping(value = "/model/{funcName}",
+    @RequestMapping(value = "/model/{funcId}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncModel(@PathVariable("funcName") String funcName);
+    Map getFuncModel(@PathVariable("funcId") String funcId);
 
     @RequestMapping(value = "/models",
             produces = {"application/json"},
             method = RequestMethod.GET)
     List<Map> getModels();
+
+    @RequestMapping(value = "/desc",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    List<Map> getDesc();
 }

@@ -28,25 +28,25 @@ public class Function implements Serializable {
 //            return FuncType.BOX;
 //        }
 //    }
-    private int id;
+    private String id;
     private String funcName;
     private int funcType; // BOX(0), CHART(1), FREE(2);
     private int seq;
 
-//    public String getFuncName() {
-//        return funcName;
-//    }
-//
-//    public void setFuncName(String funcName) {
-//        this.funcName = funcName;
-//    }
-//
-//    public int getFuncType() {
-//        return funcType;
-//    }
-//
-//    public void setFuncType(int funcType) {
-//        this.funcType = funcType;
-//    }
-//
+    public String getId() {
+        return id;
+    }
+
+    public String getFuncName() {
+        return funcName;
+    }
+
+    public int getFuncType() {
+        return funcType;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
 }

@@ -2,10 +2,7 @@ package com.jd.logistics.cloud.data.commons;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.io.Resources;
-import com.jd.logistics.cloud.data.domain.BaseModel;
-import com.jd.logistics.cloud.data.domain.ChartModel;
-import com.jd.logistics.cloud.data.domain.CommonRes;
-import com.jd.logistics.cloud.data.domain.ValueModel;
+import com.jd.logistics.cloud.data.domain.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSetMetaData;
@@ -47,20 +44,31 @@ public class Helper {
         return Helper.InputStream2String(in);
     }
 
-    public static Map<String, String> getFuncSqlByType(String funcName, ShowType type) {
+    public static Map<String, String> getDesc(String funcId) {
         String json = Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                funcName + "/" + Constants.TEMPLATE_MODEL_FILE);
+                funcId + "/" + Constants.TEMPLATE_MODEL_FILE);
+        BaseModel bm = JSON.parseObject(json, BaseModel.class);
+        Map<String, String> descList = new HashMap<>();
+        for (Description desc: bm.getDescriptions()) {
+            descList.put(desc.getName(), desc.getText());
+        }
+        return descList;
+    }
+
+    public static Map<String, String> getFuncSqlByType(String funcId, ShowType type) {
+        String json = Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
+                funcId + "/" + Constants.TEMPLATE_MODEL_FILE);
         BaseModel bm = JSON.parseObject(json, BaseModel.class);
         Map<String, String> sqlList = new HashMap<>();
         if (type == ShowType.CHART) {
             for (ChartModel model : bm.getCharts()) {
                 sqlList.put(model.getName(), Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                        funcName + "/" + model.getSql()));
+                        funcId + "/" + model.getSql()));
             }
         } else if (type == ShowType.VALUE) {
             for (ValueModel model : bm.getValues()) {
                 sqlList.put(model.getName(), Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                        funcName + "/" + model.getSql()));
+                        funcId + "/" + model.getSql()));
             }
         }
         return sqlList;

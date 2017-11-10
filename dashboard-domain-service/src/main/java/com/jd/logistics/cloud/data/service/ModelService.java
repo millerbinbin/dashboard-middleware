@@ -8,5 +8,6 @@ import java.util.Map;
  * @Date 2017/11/7 9:35
  */
 public interface ModelService {
-    Map getFuncModel(String funcName);
+    Map getFuncModel(String funcId);
+    Map getFuncDesc(String funcId);
 }

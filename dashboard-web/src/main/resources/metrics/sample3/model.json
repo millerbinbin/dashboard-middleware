@@ -31,20 +31,20 @@
       ]
     }
   ],
-  "id": "sample1",
-  "name": "在库SKU数",
+  "id": "sample3",
+  "name": "成本效率",
   "descriptions": [
     {
       "name": "day",
-      "text": "just a test 日维度1"
+      "text": "just a test 日维度3"
     },
     {
       "name": "week",
-      "text": "just a test 周维度1"
+      "text": "just a test 周维度3"
     },
     {
       "name": "month",
-      "text": "just a test 月维度1"
+      "text": "just a test 月维度3"
     }
   ],
   "values": [

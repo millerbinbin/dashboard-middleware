@@ -19,7 +19,7 @@ public class ValueRestController implements ValueApi {
     ValueService valueService;
 
     @Override
-    public Map getFuncValues(@PathVariable("funcName") String funcName) {
-        return valueService.getFuncValues(funcName);
+    public Map getFuncValues(@PathVariable("funcId") String funcId) {
+        return valueService.getFuncValues(funcId);
     }
 }

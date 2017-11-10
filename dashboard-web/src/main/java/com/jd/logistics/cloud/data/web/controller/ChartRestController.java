@@ -19,12 +19,12 @@ public class ChartRestController implements ChartApi {
     ChartService chartService;
 
     @Override
-    public Map getFuncChart(@PathVariable("funcName") String funcName) {
-        return chartService.getFuncChart(funcName);
+    public Map getFuncChart(@PathVariable("funcId") String funcId) {
+        return chartService.getFuncChart(funcId);
     }
 
     @Override
-    public String getFuncChartOption(@PathVariable("funcName") String funcName, @PathVariable("chartName") String chartName) {
-        return chartService.getFuncChartOption(funcName, chartName);
+    public String getFuncChartOption(@PathVariable("funcId") String funcId, @PathVariable("chartId") String chartId) {
+        return chartService.getFuncChartOption(funcId, chartId);
     }
 }

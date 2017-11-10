@@ -31,20 +31,20 @@
       ]
     }
   ],
-  "id": "sample1",
-  "name": "在库SKU数",
+  "id": "sample4",
+  "name": "发出订单量",
   "descriptions": [
     {
       "name": "day",
-      "text": "just a test 日维度1"
+      "text": "just a test 日维度4"
     },
     {
       "name": "week",
-      "text": "just a test 周维度1"
+      "text": "just a test 周维度4"
     },
     {
       "name": "month",
-      "text": "just a test 月维度1"
+      "text": "just a test 月维度4"
     }
   ],
   "values": [

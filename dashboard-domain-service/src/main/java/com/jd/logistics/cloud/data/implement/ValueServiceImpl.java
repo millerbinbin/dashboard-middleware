@@ -22,8 +22,8 @@ public class ValueServiceImpl implements ValueService {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Map getFuncValues(String funcName) {
-        Map<String, String> sqlList = Helper.getFuncSqlByType(funcName, ShowType.VALUE);
+    public Map getFuncValues(String funcId) {
+        Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.VALUE);
         Map res = new HashMap<>();
         for (Map.Entry<String, String> e : sqlList.entrySet()) {
             String sql = e.getValue();

@@ -32,4 +32,9 @@ public class FuncServiceImpl implements FuncService {
     public void updateFuncType(Function func) {
         funcRepository.update(func);
     }
+
+    @Override
+    public String getFuncNameById(String funcId) {
+        return funcRepository.getFuncNameById(funcId);
+    }
 }

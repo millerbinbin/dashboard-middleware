@@ -16,12 +16,15 @@ import java.util.List;
 @Mapper
 public interface FuncRepository {
 
-    @Select("SELECT id, func_name as funcName, func_type_id as funcType, seq FROM T_FUNCTION where func_type_id=#{type} order by seq")
+    @Select("SELECT concat('sample',id) as id, func_name as funcName, func_type_id as funcType, seq FROM T_FUNCTION where func_type_id=#{type} order by seq")
     List<Function> getByType(@Param("type") int type);
 
-    @Select("SELECT id, func_name as funcName, func_type_id as funcType, seq FROM T_FUNCTION order by seq")
+    @Select("SELECT concat('sample',id) as id, func_name as funcName, func_type_id as funcType, seq FROM T_FUNCTION order by seq")
     List<Function> getAll();
 
     @Update("UPDATE T_FUNCTION SET func_type_id=#{func.funcType}, seq=#{func.seq} WHERE func_name=#{func.funcName}")
     void update(@Param("func") Function func);
+
+    @Select("SELECT func_name as funcName FROM T_FUNCTION where concat('sample',id)=#{funcId}")
+    String getFuncNameById(@Param("funcId") String funcId);
 }

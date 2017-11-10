@@ -1,0 +1,56 @@
+{
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      animation: false
+    },
+    formatter:function(params) {
+      return '<span style="font-size:12px; color: #00D7FB">' + params[0].name + ' : ' + params[0].value + '</span><br>' +
+      '<span style="font-size:12px; color: #6E88AC">' + addDate(params[0].name, -7) + ' : ' + params[1].value + '</span>'
+    }
+  },
+  xAxis: {
+    type: 'category',
+    splitLine: {
+      show: false
+    },
+    axisLine: {
+      lineStyle: {
+        color: '#6E88AC'
+      }
+    },
+    data: res.stat_date.slice(-7)
+  },
+  yAxis: {
+    type: 'value',
+    boundaryGap: [0, '100%'],
+    splitLine: {
+      show: false
+    },
+    axisLine: {
+      lineStyle: {
+        color: '#6E88AC'
+      }
+    }
+  },
+  series: [{
+    type: 'bar',
+    itemStyle: {
+      normal: {
+        color: '#00D7FB',
+        width: 1
+      }
+    },
+    data: res.func_value.slice(-7)
+  },
+  {
+    type: 'bar',
+    itemStyle: {
+      normal: {
+        color: '#6E88AC',
+        width: 1
+      }
+    },
+    data: res.func_value.slice(0,7)
+  }]
+}

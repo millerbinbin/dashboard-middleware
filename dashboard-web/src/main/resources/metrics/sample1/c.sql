@@ -1,1 +1,0 @@
-SELECT '624,300' as v1, 2.8 as v2, 1.3 as v3
