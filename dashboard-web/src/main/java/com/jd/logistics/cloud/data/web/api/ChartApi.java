@@ -16,10 +16,15 @@ public interface ChartApi {
     @RequestMapping(value = "/chart/{funcId}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncChart(@PathVariable("funcId") String funcId);
+    Map getFuncCharts(@PathVariable("funcId") String funcId);
 
-    @RequestMapping(value = "/chartOption/{funcId}/{chartId}",
+    @RequestMapping(value = "/chart/{funcId}/{dateCycle}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    String getFuncChartOption(@PathVariable("funcId") String funcId, @PathVariable("chartId") String chartId);
+    Map getFuncChartByDateCycle(@PathVariable("funcId") String funcId, @PathVariable("dateCycle") String dateCycle);
+
+    @RequestMapping(value = "/chartOption/{funcId}/{dateCycle}",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    String getFuncChartOptionByDateCycle(@PathVariable("funcId") String funcId, @PathVariable("dateCycle") String dateCycle);
 }

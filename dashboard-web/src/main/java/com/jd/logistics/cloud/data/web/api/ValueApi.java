@@ -17,4 +17,9 @@ public interface ValueApi {
             produces = {"application/json"},
             method = RequestMethod.GET)
     Map getFuncValues(@PathVariable("funcId") String funcId);
+
+    @RequestMapping(value = "/{funcId}/{dateCycle}",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    Map getFuncValuesByDateCycle(@PathVariable("funcId") String funcId, @PathVariable("dateCycle") String dateCycle);
 }

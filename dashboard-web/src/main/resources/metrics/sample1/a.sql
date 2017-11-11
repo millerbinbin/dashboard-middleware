@@ -1,1 +1,0 @@
-SELECT '在库SKU数'as f1, '14,300' as v1, '昨日环比'as f2, 8.8 as v2, '上周同比'as f3, -4.3 as v3

@@ -22,4 +22,9 @@ public class ValueRestController implements ValueApi {
     public Map getFuncValues(@PathVariable("funcId") String funcId) {
         return valueService.getFuncValues(funcId);
     }
+
+    @Override
+    public Map getFuncValuesByDateCycle(@PathVariable("funcId")String funcId, @PathVariable("dateCycle")String dateCycle) {
+        return valueService.getFuncValuesByDateCycle(funcId, dateCycle);
+    }
 }

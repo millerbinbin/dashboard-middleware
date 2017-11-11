@@ -23,7 +23,7 @@ public class ChartServiceImpl implements ChartService {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Map getFuncChart(String funcId) {
+    public Map getFuncCharts(String funcId) {
         Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.CHART);
         Map res = new HashMap<>();
         for (Map.Entry<String, String> e : sqlList.entrySet()) {
@@ -35,8 +35,16 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public String getFuncChartOption(String funcId, String chartId) {
+    public Map getFuncChartByDateCycle(String funcId, String dateCycle) {
+        Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.CHART);
+        String sql = sqlList.get(dateCycle);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        return Helper.RowSet2ArrayRes(rowSet);
+    }
+
+    @Override
+    public String getFuncChartOptionByDateCycle(String funcId, String dateCycle) {
         return Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                funcId + "/" + chartId + Constants.CHART_OPTION_SUFFIX);
+                funcId + "/" + dateCycle + Constants.CHART_OPTION_SUFFIX);
     }
 }

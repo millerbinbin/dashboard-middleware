@@ -2,33 +2,15 @@
   "charts": [
     {
       "name": "day",
-      "sql": "e.sql",
-      "params": [
-        {
-          "name": "dateCycle",
-          "value": "天"
-        }
-      ]
+      "sql": "e.sql"
     },
     {
       "name": "week",
-      "sql": "e.sql",
-      "params": [
-        {
-          "name": "dateCycle",
-          "value": "周"
-        }
-      ]
+      "sql": "e.sql"
     },
     {
       "name": "month",
-      "sql": "e.sql",
-      "params": [
-        {
-          "name": "dateCycle",
-          "value": "月"
-        }
-      ]
+      "sql": "e.sql"
     }
   ],
   "id": "sample1",
@@ -50,7 +32,15 @@
   "values": [
     {
       "name": "day",
-      "sql": "a.sql"
+      "sql": "number-day.sql"
+    },
+    {
+      "name": "week",
+      "sql": "number-week.sql"
+    },
+    {
+      "name": "month",
+      "sql": "number-month.sql"
     }
   ]
 }
