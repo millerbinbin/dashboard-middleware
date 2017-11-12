@@ -3,7 +3,9 @@ package com.jd.logistics.cloud.data.web.api;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -21,5 +23,9 @@ public interface ValueApi {
     @RequestMapping(value = "/{funcId}/{dateCycle}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncValuesByDateCycle(@PathVariable("funcId") String funcId, @PathVariable("dateCycle") String dateCycle);
+    Map getFuncValuesByDateCycle(@PathVariable("funcId") String funcId,
+                                 @PathVariable(value="dateCycle")String dateCycle,
+                                 @RequestParam(value="warehouse")String warehouse,
+                                 @RequestParam(value="sysdate")String sysdate,
+                                 HttpServletRequest request);
 }

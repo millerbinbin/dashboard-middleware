@@ -10,7 +10,7 @@ import java.util.Map;
 public interface ChartService {
     Map getFuncCharts(String funcId);
 
-    Map getFuncChartByDateCycle(String funcId, String dateCycle);
+    Map getFuncChartByDateCycle(String funcId, String dateCycle, Map<String, String> params);
 
     String getFuncChartOptionByDateCycle(String funcId, String dateCycle);
 }

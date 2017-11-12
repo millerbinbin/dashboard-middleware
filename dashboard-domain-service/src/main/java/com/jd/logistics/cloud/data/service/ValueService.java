@@ -10,5 +10,5 @@ import java.util.Map;
 public interface ValueService {
     Map getFuncValues(String funcId);
 
-    Map getFuncValuesByDateCycle (String fucId, String dateCycle);
+    Map getFuncValuesByDateCycle (String funcId, String dateCycle, Map<String, String> params);
 }

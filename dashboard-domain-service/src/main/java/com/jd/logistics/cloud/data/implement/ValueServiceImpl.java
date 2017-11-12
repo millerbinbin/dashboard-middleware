@@ -34,9 +34,12 @@ public class ValueServiceImpl implements ValueService {
     }
 
     @Override
-    public Map getFuncValuesByDateCycle(String funcId, String dateCycle) {
+    public Map getFuncValuesByDateCycle(String funcId, String dateCycle, Map<String, String> params) {
         Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.VALUE);
         String sql = sqlList.get(dateCycle);
+        for (Map.Entry<String, String> p : params.entrySet()) {
+            sql = sql.replace(String.format("#{{%s}}", p.getKey()), p.getValue());
+        }
         Map res = new HashMap<>();
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         res.put("value", Helper.RowSet2SingleRes(rowSet));

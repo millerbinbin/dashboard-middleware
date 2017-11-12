@@ -35,9 +35,12 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public Map getFuncChartByDateCycle(String funcId, String dateCycle) {
+    public Map getFuncChartByDateCycle(String funcId, String dateCycle, Map<String, String> params) {
         Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.CHART);
         String sql = sqlList.get(dateCycle);
+        for (Map.Entry<String, String> p : params.entrySet()) {
+            sql = sql.replace(String.format("#{{%s}}", p.getKey()), p.getValue());
+        }
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         return Helper.RowSet2ArrayRes(rowSet);
     }

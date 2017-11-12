@@ -2,15 +2,15 @@
   "charts": [
     {
       "name": "day",
-      "sql": "e.sql"
+      "sql": "chart-day.sql"
     },
     {
       "name": "week",
-      "sql": "e.sql"
+      "sql": "chart-week.sql"
     },
     {
       "name": "month",
-      "sql": "e.sql"
+      "sql": "chart-month.sql"
     }
   ],
   "id": "sample3",
