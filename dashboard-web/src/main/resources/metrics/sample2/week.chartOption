@@ -9,9 +9,6 @@
       '<span style="font-size:12px; color: #6E88AC">' + addDate(params[0].name, -8) + ' : ' + params[1].value + '</span>'
     }
   },
-  grid: {
-     left: '15%',
-  },
   xAxis: {
     type: 'category',
     splitLine: {

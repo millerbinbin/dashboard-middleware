@@ -5,8 +5,8 @@
             <v-flex xs4>
                 <v-layout row wrap>
                     <v-flex xs12 box-idx-name>{{data.value.f2}}</v-flex>
-                    <v-flex xs9 box-idx-value>{{data.value.v2}}%</v-flex>
-                    <v-flex xs3 text-xs-left>
+                    <v-flex xs8 box-idx-value>{{data.value.v2}}%</v-flex>
+                    <v-flex xs4 text-xs-left>
                         <div v-if="data.value.v2 > 0" class="trending-up"></div>
                         <div v-else-if="data.value.v2 == 0" class="trending-flat"></div>
                         <div v-else-if="data.value.v2 < 0" class="trending-down"></div>
@@ -22,8 +22,8 @@
             <v-flex xs4>
                 <v-layout row wrap>
                     <v-flex xs12 box-idx-name>{{data.value.f3}}</v-flex>
-                    <v-flex xs9 box-idx-value>{{data.value.v3}}%</v-flex>
-                    <v-flex xs3 text-xs-left>
+                    <v-flex xs8 box-idx-value>{{data.value.v3}}%</v-flex>
+                    <v-flex xs4 text-xs-left>
                         <div v-if="data.value.v3 > 0" class="trending-up"></div>
                         <div v-else-if="data.value.v3 == 0" class="trending-flat"></div>
                         <div v-else-if="data.value.v3 < 0" class="trending-down"></div>

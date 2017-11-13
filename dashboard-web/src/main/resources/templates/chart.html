@@ -5,21 +5,21 @@
             <v-flex xs2>
                 <v-layout row wrap>
                     <v-flex xs12 chart-idx-name>{{data.value.f2}}</v-flex>
-                    <v-flex xs9 chart-idx-value><b>{{data.value.v2}}%</b></v-flex>
-                    <v-flex xs3 text-xs-left>
+                    <v-flex xs8 chart-idx-value><b>{{data.value.v2}}%</b></v-flex>
+                    <v-flex xs4 text-xs-left>
                         <div v-if="data.value.v2 > 0" class="trending-up"></div>
                         <div v-else-if="data.value.v2 == 0" class="trending-flat"></div>
                         <div v-else-if="data.value.v2 < 0" class="trending-down"></div>
                     </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex xs4 offset-xs1 style="padding-top: 20px">
+            <v-flex xs3 offset-xs1 style="padding-top: 20px">
                 <v-layout row wrap>
-                    <v-flex xs2 grey-bar></v-flex>
-                    <v-flex xs4 chart-idx-name>{{sysDateBefore}}</v-flex>
+                    <v-flex xs3 cyan-bar></v-flex>
+                    <v-flex xs9 chart-idx-value>{{sysDate}}</v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex xs1>
+            <v-flex xs2 text-xs-right>
                 <v-btn icon @click="goDetails(id)">
                     <i class="material-icons md-24 grey100">more_horiz</i>
                 </v-btn>
@@ -33,18 +33,18 @@
             <v-flex xs2>
                 <v-layout row wrap>
                     <v-flex xs12 chart-idx-name>{{data.value.f3}}</v-flex>
-                    <v-flex xs9 chart-idx-value><b>{{data.value.v3}}%</b></v-flex>
-                    <v-flex xs3 text-xs-left>
+                    <v-flex xs8 chart-idx-value><b>{{data.value.v3}}%</b></v-flex>
+                    <v-flex xs4 text-xs-left>
                         <div v-if="data.value.v3 > 0" class="trending-up"></div>
                         <div v-else-if="data.value.v3 == 0" class="trending-flat"></div>
                         <div v-else-if="data.value.v3 < 0" class="trending-down"></div>
                     </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex xs4 offset-xs1 style="padding-top: 10px">
+            <v-flex xs3 offset-xs1>
                 <v-layout row wrap>
-                    <v-flex xs2 cyan-bar></v-flex>
-                    <v-flex xs4 chart-idx-name>{{sysDate}}</v-flex>
+                    <v-flex xs3 grey-bar></v-flex>
+                    <v-flex xs9 chart-idx-value>{{sysDateBefore}}</v-flex>
                 </v-layout>
             </v-flex>
         </v-layout>
@@ -52,7 +52,7 @@
     <v-layout row wrap>
         <v-flex xs12 chart-detail>
             <v-card>
-                <div id="sample1-day" style="width:100%;height:180px"></div>
+                <div :id="chartId" style="width:100%;height:180px"></div>
             </v-card>
         </v-flex>
     </v-layout>
