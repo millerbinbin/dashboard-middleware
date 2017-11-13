@@ -1,8 +1,8 @@
 package com.jd.logistics.cloud.data.web.controller;
 
-import com.jd.logistics.cloud.data.domain.Function;
-import com.jd.logistics.cloud.data.service.FuncService;
-import com.jd.logistics.cloud.data.web.api.FuncApi;
+import com.jd.logistics.cloud.data.domain.Metric;
+import com.jd.logistics.cloud.data.service.MetricService;
+import com.jd.logistics.cloud.data.web.api.MetricApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,24 +19,24 @@ import java.util.List;
  * @Date 2017/10/31 10:16
  */
 @RestController
-public class FuncRestController implements FuncApi {
+public class MetricRestController implements MetricApi {
     @Autowired
-    FuncService funcService;
+    MetricService metricService;
 
     @Override
-    public List<Function> getFuncByType(@PathVariable("type") int type) {
-        return funcService.getFuncByType(type);
+    public List<Metric> getMetricsByType(@PathVariable("type") int type) {
+        return metricService.getMetricsByType(type);
     }
 
     @Override
-    public List<Function> getFunc() {
-        return funcService.getAllFunc();
+    public List<Metric> getAllMetrics() {
+        return metricService.getAllMetrics();
     }
 
     @Override
-    public ResponseEntity updateFuncType(@Valid @RequestBody List<Function> functionList) {
-        for (Function function : functionList) {
-            funcService.updateFuncType(function);
+    public ResponseEntity updateMetric(@Valid @RequestBody List<Metric> functionList) {
+        for (Metric function : functionList) {
+            metricService.updateMetric(function);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.io.Resources;
 import com.jd.logistics.cloud.data.domain.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSetMetaData;
 
@@ -41,37 +42,72 @@ public class Helper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Helper.InputStream2String(in);
+        return InputStream2String(in);
     }
 
-    public static Map<String, String> getDesc(String funcId) {
-        String json = Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                funcId + "/" + Constants.TEMPLATE_MODEL_FILE);
+    public static BaseModel getBaseModel(String metricId) {
+        String json = getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + Constants.CONFIG_MODEL_FILE);
         BaseModel bm = JSON.parseObject(json, BaseModel.class);
-        Map<String, String> descList = new HashMap<>();
-        for (Description desc: bm.getDescriptions()) {
-            descList.put(desc.getName(), desc.getText());
-        }
-        return descList;
+        return bm;
     }
 
-    public static Map<String, String> getFuncSqlByType(String funcId, ShowType type) {
-        String json = Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                funcId + "/" + Constants.TEMPLATE_MODEL_FILE);
-        BaseModel bm = JSON.parseObject(json, BaseModel.class);
-        Map<String, String> sqlList = new HashMap<>();
-        if (type == ShowType.CHART) {
-            for (ChartModel model : bm.getCharts()) {
-                sqlList.put(model.getName(), Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                        funcId + "/" + model.getSql()));
-            }
-        } else if (type == ShowType.VALUE) {
-            for (ValueModel model : bm.getValues()) {
-                sqlList.put(model.getName(), Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                        funcId + "/" + model.getSql()));
-            }
+    public static Map<String, String> getDesc(String metricId) {
+        BaseModel model = getBaseModel(metricId);
+        Map<String, String> defList = new HashMap<>();
+        for (Def def : model.getDef()) {
+            defList.put(def.getName(), def.getText());
         }
-        return sqlList;
+        return defList;
+    }
+
+    public static List<ChartModel> getChartModels(String metricId) {
+        BaseModel model = getBaseModel(metricId);
+        return model.getCharts();
+    }
+
+    @Nullable
+    public static ChartModel getChartModelByDateCycle(String metricId, String dateCycle) {
+        BaseModel model = getBaseModel(metricId);
+        for (ChartModel m : model.getCharts()) {
+            if (m.getName().equals(dateCycle))
+                return m;
+        }
+        return null;
+    }
+
+    public static List<ValueModel> getValueModels(String metricId) {
+        BaseModel model = getBaseModel(metricId);
+        return model.getValues();
+    }
+
+    @Nullable
+    public static ValueModel getValueModelByDateCycle(String metricId, String dateCycle) {
+        BaseModel model = getBaseModel(metricId);
+        for (ValueModel m : model.getValues()) {
+            if (m.getName().equals(dateCycle))
+                return m;
+        }
+        return null;
+    }
+
+    @NotNull
+    public static String getMetricChartSql(String metricId, String dateCycle) {
+        ChartModel model = getChartModelByDateCycle(metricId, dateCycle);
+        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + model.getSql());
+    }
+
+    @NotNull
+    public static String getMetricValueSql(String metricId, String dateCycle) {
+        ValueModel model = getValueModelByDateCycle(metricId, dateCycle);
+        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + model.getSql());
+    }
+
+    public static String getMetricChartOption(String metricId, String dateCycle) {
+        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + dateCycle + Constants.CHART_OPTION_SUFFIX);
     }
 
     public static Map<String, List<Object>> RowSet2ArrayRes(SqlRowSet rowSet) {
@@ -86,7 +122,6 @@ public class Helper {
         }
         return cr.getArrayResult();
     }
-
 
     public static Map<String, Object> RowSet2SingleRes(SqlRowSet rowSet) {
         SqlRowSetMetaData metaData = rowSet.getMetaData();

@@ -8,9 +8,7 @@ import java.util.Map;
  * @Date 2017/11/7 9:22
  */
 public interface ChartService {
-    Map getFuncCharts(String funcId);
+    Map getMetricChart(String metricId, String dateCycle, Map<String, String> params);
 
-    Map getFuncChartByDateCycle(String funcId, String dateCycle, Map<String, String> params);
-
-    String getFuncChartOptionByDateCycle(String funcId, String dateCycle);
+    String getMetricChartOption(String metricId, String dateCycle);
 }

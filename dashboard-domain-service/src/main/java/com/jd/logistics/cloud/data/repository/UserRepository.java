@@ -1,11 +1,9 @@
 package com.jd.logistics.cloud.data.repository;
 
-import com.jd.logistics.cloud.data.domain.DimQuery;
-import com.jd.logistics.cloud.data.domain.GenericRes;
 import com.jd.logistics.cloud.data.domain.User;
-import org.apache.ibatis.annotations.*;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @Author hubin

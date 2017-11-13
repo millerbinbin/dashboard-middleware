@@ -5,8 +5,8 @@ import java.util.Map;
 /**
  * @Author hubin
  * @Description:
- * @Date 2017/11/7 9:35
+ * @Date 2017/11/13 15:21
  */
-public interface ModelService {
-    Map getModel(String metricId, String metricName);
+public interface DefService {
+    Map getMetricDef(String metricId);
 }

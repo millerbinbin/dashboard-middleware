@@ -1,7 +1,6 @@
 package com.jd.logistics.cloud.data.commons;
 
-import com.jd.logistics.cloud.data.domain.Function;
-import com.jd.logistics.cloud.data.domain.Stat;
+import com.jd.logistics.cloud.data.domain.Metric;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -14,8 +13,7 @@ import java.util.*;
 public class GenStatService {
     private final static int rec_num = 32;
     private final static Random r = new Random(rec_num);
-    public static List<Stat> statList = new ArrayList<>();
-    public static List<Function> functionList = new ArrayList<>();
+    public static List<Metric> functionList = new ArrayList<>();
 
     static {
         // gen(rec_num);
@@ -77,20 +75,11 @@ public class GenStatService {
 
     }
 
-    public static List<Stat> getStatList(int limit, int offset) {
-        List<Stat> tmpList = new ArrayList<>();
-        for (int i = offset; i < offset + limit; i++) {
-            if (i > count - 1) break;
-            tmpList.add(statList.get(i));
-        }
-        return tmpList;
-    }
 
-    public static List<Function> getFunctionList() {
+    public static List<Metric> getFunctionList() {
         return functionList;
     }
 
-    public static int count = statList.size();
 
     public static void main(String[] args) {
         GenStatService gs = new GenStatService();

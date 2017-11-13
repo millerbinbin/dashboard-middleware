@@ -1,6 +1,6 @@
 package com.jd.logistics.cloud.data.web.api;
 
-import com.jd.logistics.cloud.data.domain.Function;
+import com.jd.logistics.cloud.data.domain.Metric;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,21 +15,21 @@ import java.util.List;
  * @Description:
  * @Date 2017/10/31 10:14
  */
-@RequestMapping(value = "/api/func")
-public interface FuncApi {
+@RequestMapping(value = "/api/metric")
+public interface MetricApi {
 
     @RequestMapping(value = "/{type}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    List<Function> getFuncByType(@PathVariable("type") int type);
+    List<Metric> getMetricsByType(@PathVariable("type") int type);
 
     @RequestMapping(value = "",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    List<Function> getFunc();
+    List<Metric> getAllMetrics();
 
     @RequestMapping(value = "",
             produces = {"application/json"},
             method = RequestMethod.PUT)
-    ResponseEntity updateFuncType(@Valid @RequestBody List<Function> functionList);
+    ResponseEntity updateMetric(@Valid @RequestBody List<Metric> functionList);
 }

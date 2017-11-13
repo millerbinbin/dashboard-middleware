@@ -8,7 +8,5 @@ import java.util.Map;
  * @Date 2017/11/7 9:22
  */
 public interface ValueService {
-    Map getFuncValues(String funcId);
-
-    Map getFuncValuesByDateCycle (String funcId, String dateCycle, Map<String, String> params);
+    Map getMetricValue(String metricId, String dateCycle, Map<String, String> params);
 }

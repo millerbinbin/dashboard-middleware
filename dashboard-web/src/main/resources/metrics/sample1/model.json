@@ -15,7 +15,7 @@
   ],
   "id": "sample1",
   "name": "在库SKU数",
-  "descriptions": [
+  "def": [
     {
       "name": "day",
       "text": "just a test 日维度1"

@@ -1,12 +1,9 @@
 package com.jd.logistics.cloud.data.web.api;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,22 +13,17 @@ import java.util.Map;
  */
 @RequestMapping(value = "/api")
 public interface ChartApi {
-    @RequestMapping(value = "/chart/{funcId}",
+    @RequestMapping(value = "/chart",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncCharts(@PathVariable("funcId") String funcId);
+    Map getMetricChart(@RequestParam("metric") String metricId,
+                       @RequestParam("cycle") String dateCycle,
+                       @RequestParam("warehouse") String warehouse,
+                       @RequestParam("sysdate") String sysdate);
 
-    @RequestMapping(value = "/chart/{funcId}/{dateCycle}",
+    @RequestMapping(value = "/chartOption",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    Map getFuncChartByDateCycle(@PathVariable("funcId") String funcId,
-                                       @PathVariable(value="dateCycle")String dateCycle,
-                                       @RequestParam(value="warehouse")String warehouse,
-                                       @RequestParam(value="sysdate")String sysdate,
-                                       HttpServletRequest request);
-
-    @RequestMapping(value = "/chartOption/{funcId}/{dateCycle}",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
-    String getFuncChartOptionByDateCycle(@PathVariable("funcId") String funcId, @PathVariable("dateCycle") String dateCycle);
+    String getMetricChartOption(@RequestParam("metric") String metricId,
+                                @RequestParam("cycle") String dateCycle);
 }

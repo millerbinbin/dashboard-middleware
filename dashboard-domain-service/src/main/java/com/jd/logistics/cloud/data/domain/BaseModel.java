@@ -1,7 +1,6 @@
 package com.jd.logistics.cloud.data.domain;
 
 import lombok.Data;
-import org.apache.ibatis.javassist.runtime.Desc;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,7 +17,7 @@ public class BaseModel implements Serializable {
     private String name;
     private List<ChartModel> charts;
     private List<ValueModel> values;
-    private List<Description> descriptions;
+    private List<Def> def;
 
     public String getId() {
         return id;
@@ -36,7 +35,7 @@ public class BaseModel implements Serializable {
         return values;
     }
 
-    public List<Description> getDescriptions() {
-        return descriptions;
+    public List<Def> getDef() {
+        return def;
     }
 }

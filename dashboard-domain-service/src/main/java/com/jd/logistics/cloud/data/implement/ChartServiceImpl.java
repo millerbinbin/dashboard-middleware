@@ -1,15 +1,12 @@
 package com.jd.logistics.cloud.data.implement;
 
-import com.jd.logistics.cloud.data.commons.Constants;
 import com.jd.logistics.cloud.data.commons.Helper;
-import com.jd.logistics.cloud.data.commons.ShowType;
 import com.jd.logistics.cloud.data.service.ChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,21 +20,8 @@ public class ChartServiceImpl implements ChartService {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Map getFuncCharts(String funcId) {
-        Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.CHART);
-        Map res = new HashMap<>();
-        for (Map.Entry<String, String> e : sqlList.entrySet()) {
-            String sql = e.getValue();
-            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
-            res.put(e.getKey(), Helper.RowSet2ArrayRes(rowSet));
-        }
-        return res;
-    }
-
-    @Override
-    public Map getFuncChartByDateCycle(String funcId, String dateCycle, Map<String, String> params) {
-        Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.CHART);
-        String sql = sqlList.get(dateCycle);
+    public Map getMetricChart(String metricId, String dateCycle, Map<String, String> params) {
+        String sql = Helper.getMetricChartSql(metricId, dateCycle);
         for (Map.Entry<String, String> p : params.entrySet()) {
             sql = sql.replace(String.format("#{{%s}}", p.getKey()), p.getValue());
         }
@@ -46,8 +30,7 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public String getFuncChartOptionByDateCycle(String funcId, String dateCycle) {
-        return Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER + "/" +
-                funcId + "/" + dateCycle + Constants.CHART_OPTION_SUFFIX);
+    public String getMetricChartOption(String metricId, String dateCycle) {
+        return Helper.getMetricChartOption(metricId, dateCycle);
     }
 }

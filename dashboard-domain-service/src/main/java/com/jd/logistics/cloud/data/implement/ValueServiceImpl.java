@@ -1,7 +1,6 @@
 package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.commons.Helper;
-import com.jd.logistics.cloud.data.commons.ShowType;
 import com.jd.logistics.cloud.data.service.ValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,21 +21,8 @@ public class ValueServiceImpl implements ValueService {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Map getFuncValues(String funcId) {
-        Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.VALUE);
-        Map res = new HashMap<>();
-        for (Map.Entry<String, String> e : sqlList.entrySet()) {
-            String sql = e.getValue();
-            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
-            res.put(e.getKey(), Helper.RowSet2SingleRes(rowSet));
-        }
-        return res;
-    }
-
-    @Override
-    public Map getFuncValuesByDateCycle(String funcId, String dateCycle, Map<String, String> params) {
-        Map<String, String> sqlList = Helper.getFuncSqlByType(funcId, ShowType.VALUE);
-        String sql = sqlList.get(dateCycle);
+    public Map getMetricValue(String metricId, String dateCycle, Map<String, String> params) {
+        String sql = Helper.getMetricValueSql(metricId, dateCycle);
         for (Map.Entry<String, String> p : params.entrySet()) {
             sql = sql.replace(String.format("#{{%s}}", p.getKey()), p.getValue());
         }

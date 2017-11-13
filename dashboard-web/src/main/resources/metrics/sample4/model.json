@@ -15,7 +15,7 @@
   ],
   "id": "sample4",
   "name": "发出订单量",
-  "descriptions": [
+  "def": [
     {
       "name": "day",
       "text": "just a test 日维度4"
