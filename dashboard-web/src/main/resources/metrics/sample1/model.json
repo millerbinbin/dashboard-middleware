@@ -14,7 +14,7 @@
     }
   ],
   "id": "sample1",
-  "name": "在库SKU数",
+  "name": "在库SKU",
   "def": [
     {
       "name": "day",
