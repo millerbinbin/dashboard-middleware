@@ -10,16 +10,6 @@ import java.io.Serializable;
  * @Date 2017/11/6 10:40
  */
 @Data
-public class ChartModel implements Serializable {
+public class ChartModel extends CommonModel {
     private static final long serialVersionUID = -1320829926542972100L;
-    private String name;
-    private String sql;
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSql() {
-        return sql;
-    }
 }

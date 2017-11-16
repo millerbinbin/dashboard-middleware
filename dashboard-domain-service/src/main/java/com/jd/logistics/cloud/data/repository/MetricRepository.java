@@ -22,7 +22,7 @@ public interface MetricRepository {
     @Select("SELECT concat('sample',id) as id, func_name as metricName, func_type_id as metricType, seq FROM T_FUNCTION order by seq")
     List<Metric> getAll();
 
-    @Update("UPDATE T_FUNCTION SET func_type_id=#{func.metricType}, seq=#{func.seq} WHERE func_name=#{func.metricName}")
+    @Update("UPDATE T_FUNCTION SET func_type_id=#{metric.metricType}, seq=#{metric.seq} WHERE concat('sample',id)=#{metric.id}")
     void update(@Param("metric") Metric metric);
 
     @Select("SELECT func_name as metricName FROM T_FUNCTION where concat('sample',id)=#{metricId}")

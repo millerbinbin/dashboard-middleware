@@ -16,6 +16,12 @@ public interface UserRepository {
     User getById(@Param("id") Long id);
 
     @Select("SELECT * FROM T_USER WHERE username = #{username}")
-    User getByName(@Param("username") String username);
+    User getByUsername(@Param("username") String username);
 
+    @Select("select GROUP_CONCAT(ROLE)as roles from T_USER_ROLE ur " +
+            "INNER JOIN T_USER u on ur.USER_ID = u.ID " +
+            "INNER JOIN T_ROLE r on ur.ROLE_ID = r.ID " +
+            "where username=#{username}"
+    )
+    String getRolesByUsername(@Param("username") String username);
 }

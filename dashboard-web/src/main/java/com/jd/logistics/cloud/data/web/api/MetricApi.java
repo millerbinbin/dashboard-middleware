@@ -31,5 +31,5 @@ public interface MetricApi {
     @RequestMapping(value = "",
             produces = {"application/json"},
             method = RequestMethod.PUT)
-    ResponseEntity updateMetric(@Valid @RequestBody List<Metric> functionList);
+    ResponseEntity updateMetric(@Valid @RequestBody List<Metric> metrics);
 }

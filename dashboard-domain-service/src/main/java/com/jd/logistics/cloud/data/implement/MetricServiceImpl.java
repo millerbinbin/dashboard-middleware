@@ -29,8 +29,8 @@ public class MetricServiceImpl implements MetricService {
     }
 
     @Override
-    public void updateMetric(Metric func) {
-        metricRepository.update(func);
+    public void updateMetric(Metric metric) {
+        metricRepository.update(metric);
     }
 
     @Override

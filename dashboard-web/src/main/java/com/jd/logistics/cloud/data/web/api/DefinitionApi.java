@@ -1,5 +1,6 @@
 package com.jd.logistics.cloud.data.web.api;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @Date 2017/11/13 12:42
  */
 @RequestMapping(value = "/api")
+@PreAuthorize("hasRole('GUEST')")
 public interface DefinitionApi {
     @RequestMapping(value = "/def/{metricId}",
             produces = {"application/json"},

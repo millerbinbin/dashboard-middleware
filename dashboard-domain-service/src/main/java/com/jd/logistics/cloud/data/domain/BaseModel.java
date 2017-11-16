@@ -17,6 +17,7 @@ public class BaseModel implements Serializable {
     private String name;
     private List<ChartModel> charts;
     private List<ValueModel> values;
+    private List<GridModel> grids;
     private List<Def> def;
 
     public String getId() {
@@ -33,6 +34,10 @@ public class BaseModel implements Serializable {
 
     public List<ValueModel> getValues() {
         return values;
+    }
+
+    public List<GridModel> getGrids() {
+        return grids;
     }
 
     public List<Def> getDef() {

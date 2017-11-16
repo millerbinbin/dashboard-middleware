@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSetMetaData;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,21 @@ public class Helper {
         return null;
     }
 
+    public static List<GridModel> getGridModels(String metricId) {
+        BaseModel model = getBaseModel(metricId);
+        return model.getGrids();
+    }
+
+    @Nullable
+    public static GridModel getGridModelByDateCycle(String metricId, String dateCycle) {
+        BaseModel model = getBaseModel(metricId);
+        for (GridModel m : model.getGrids()) {
+            if (m.getName().equals(dateCycle))
+                return m;
+        }
+        return null;
+    }
+
     @NotNull
     public static String getMetricChartSql(String metricId, String dateCycle) {
         ChartModel model = getChartModelByDateCycle(metricId, dateCycle);
@@ -101,6 +117,13 @@ public class Helper {
     @NotNull
     public static String getMetricValueSql(String metricId, String dateCycle) {
         ValueModel model = getValueModelByDateCycle(metricId, dateCycle);
+        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + model.getSql());
+    }
+
+    @NotNull
+    public static String getMetricGridSql(String metricId, String dateCycle) {
+        GridModel model = getGridModelByDateCycle(metricId, dateCycle);
         return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
                 metricId + "/" + model.getSql());
     }
@@ -121,6 +144,29 @@ public class Helper {
             }
         }
         return cr.getArrayResult();
+    }
+
+    public static Map<String, List<Object>> RowSet2HeaderAndRes(SqlRowSet rowSet) {
+        SqlRowSetMetaData metaData = rowSet.getMetaData();
+        String[] colNames = metaData.getColumnNames();
+        Map resMap = new HashMap();
+        List<String> headers = new ArrayList<>();
+        for (int i = 1; i <= colNames.length; i++) {
+            headers.add("c" + i + "," + metaData.getColumnLabel(i));
+        }
+        resMap.put("headers", headers);
+
+        List<Map<String, Object>> itemList = new ArrayList<>();
+        while (rowSet.next()) {
+            Map<String, Object> tmp = new HashMap<>();
+            for (int i = 1; i <= colNames.length; i++) {
+                tmp.put("c" + i, rowSet.getObject(i));
+            }
+            itemList.add(tmp);
+        }
+        resMap.put("items", itemList);
+
+        return resMap;
     }
 
     public static Map<String, Object> RowSet2SingleRes(SqlRowSet rowSet) {

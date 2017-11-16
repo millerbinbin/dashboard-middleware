@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByName(String username) {
-        return userRepository.getByName(username);
+        return userRepository.getByUsername(username);
     }
 
     @Override
     public boolean checkPwd(String username, String pwd) {
-        return pwd.equals(userRepository.getByName(username).getPassword());
+        return pwd.equals(userRepository.getByUsername(username).getPassword());
     }
 
     @Override
@@ -34,5 +34,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(long id) {
         return userRepository.getById(id);
+    }
+
+    @Override
+    public String[] getRolesByUsername(String username) {
+        String roles = userRepository.getRolesByUsername(username);
+        return roles.split(",");
     }
 }

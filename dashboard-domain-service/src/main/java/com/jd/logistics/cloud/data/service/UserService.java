@@ -15,4 +15,6 @@ public interface UserService {
     boolean checkUser(String username);
 
     User getUserById(long id);
+
+    String[] getRolesByUsername(String username);
 }

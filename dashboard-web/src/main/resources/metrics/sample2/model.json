@@ -42,5 +42,19 @@
       "name": "month",
       "sql": "number-month.sql"
     }
+  ],
+  "grids": [
+    {
+      "name": "day",
+      "sql": "grid-day.sql"
+    },
+    {
+      "name": "week",
+      "sql": "grid-week.sql"
+    },
+    {
+      "name": "month",
+      "sql": "grid-month.sql"
+    }
   ]
 }

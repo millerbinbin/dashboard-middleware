@@ -34,9 +34,9 @@ public class MetricRestController implements MetricApi {
     }
 
     @Override
-    public ResponseEntity updateMetric(@Valid @RequestBody List<Metric> functionList) {
-        for (Metric function : functionList) {
-            metricService.updateMetric(function);
+    public ResponseEntity updateMetric(@Valid @RequestBody List<Metric> metrics) {
+        for (Metric metric : metrics) {
+            metricService.updateMetric(metric);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
