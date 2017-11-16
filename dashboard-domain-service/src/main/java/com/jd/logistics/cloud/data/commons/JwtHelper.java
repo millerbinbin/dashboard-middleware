@@ -35,6 +35,7 @@ public class JwtHelper {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             claims = null;
         }
         return claims;
@@ -50,12 +51,14 @@ public class JwtHelper {
 
     public static UserRole getUserRolesFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
-        UserRole userRole = new UserRole();
         if (claims != null) {
+            UserRole userRole = new UserRole();
             userRole.setUsername(claims.get("username", String.class));
             userRole.setRoles(claims.get("roles", ArrayList.class));
+            return userRole;
+        } else {
+            return null;
         }
-        return userRole;
     }
 
     public static void main(String[] args) {
