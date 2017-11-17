@@ -15,18 +15,8 @@ import java.util.Map;
  */
 @Service
 public class ModelServiceImpl implements ModelService {
-    private static final String chartTemplate = getMetricChartFormat();
-    private static final String numberTemplate = getMetricValueFormat();
-
-    private static String getMetricChartFormat() {
-        return ModelHelper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER +
-                "/" + Constants.CHART_TEMPLATE_FILE);
-    }
-
-    private static String getMetricValueFormat() {
-        return ModelHelper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER +
-                "/" + Constants.VALUE_TEMPLATE_FILE);
-    }
+    private static final String chartTemplate = ModelHelper.getMetricChartFormat();
+    private static final String numberTemplate = ModelHelper.getMetricValueFormat();
 
     @Override
     public Map getModel(String metricId, String metricName) {

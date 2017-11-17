@@ -62,16 +62,21 @@ public class ModelHelper {
         resourceContent.put(key, content);
     }
 
-    public static BaseModel getBaseModel(String metricId) {
+    private static String getContentAndSave(String key, String filePath) {
         String content;
-        String key = "BaseModel" + metricId;
         if (getContentFromCache(key) == null){
-            content = getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
-                    metricId + "/" + Constants.CONFIG_MODEL_FILE);
+            content = getStringFromResourcePath(filePath);
             saveContentToCache(key, content);
         } else {
             content = getContentFromCache(key).toString();
         }
+        return content;
+    }
+
+    public static BaseModel getBaseModel(String metricId) {
+        String key = "BaseModel|" + metricId;
+        String content = getContentAndSave(key, Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + Constants.CONFIG_MODEL_FILE);
         BaseModel bm = JSON.parseObject(content, BaseModel.class);
         return bm;
     }
@@ -133,34 +138,48 @@ public class ModelHelper {
     @NotNull
     public static String getMetricChartSql(String metricId, String dateCycle) {
         ChartModel model = getChartModelByDateCycle(metricId, dateCycle);
-        String key = "MetricChartSql" + metricId + dateCycle;
-        String content;
-        if (getContentFromCache(key) == null) {
-            content = getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
-                    metricId + "/" + model.getSql());
-            saveContentToCache(key, content);
-        } else {
-            content = getContentFromCache(key).toString();
-        }
+        String key = "MetricChartSql|" + metricId + '|' + dateCycle;
+        String content = getContentAndSave(key, Constants.CONFIG_PARENT_FOLDER + "/" +
+                metricId + "/" + model.getSql());
         return content;
     }
 
     @NotNull
     public static String getMetricValueSql(String metricId, String dateCycle) {
         ValueModel model = getValueModelByDateCycle(metricId, dateCycle);
-        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+        String key = "MetricValueSql|" + metricId + '|' + dateCycle;
+        String content = getContentAndSave(key, Constants.CONFIG_PARENT_FOLDER + "/" +
                 metricId + "/" + model.getSql());
+        return content;
     }
 
     @NotNull
     public static String getMetricGridSql(String metricId, String dateCycle) {
         GridModel model = getGridModelByDateCycle(metricId, dateCycle);
-        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+        String key = "MetricGridSql|" + metricId + '|' + dateCycle;
+        String content = getContentAndSave(key, Constants.CONFIG_PARENT_FOLDER + "/" +
                 metricId + "/" + model.getSql());
+        return content;
     }
 
     public static String getMetricChartOption(String metricId, String dateCycle) {
-        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+        String key = "MetricChartOption|" + metricId + '|' + dateCycle;
+        String content = getContentAndSave(key, Constants.CONFIG_PARENT_FOLDER + "/" +
                 metricId + "/" + dateCycle + Constants.CHART_OPTION_SUFFIX);
+        return content;
+    }
+
+    public static String getMetricChartFormat() {
+        String key = "MetricChartFormat";
+        String content = getContentAndSave(key, Constants.TEMPLATE_PARENT_FOLDER +
+                "/" + Constants.CHART_TEMPLATE_FILE);
+        return content;
+    }
+
+    public static String getMetricValueFormat() {
+        String key = "MetricValueFormat";
+        String content = getContentAndSave(key, Constants.TEMPLATE_PARENT_FOLDER +
+                "/" + Constants.VALUE_TEMPLATE_FILE);
+        return content;
     }
 }
