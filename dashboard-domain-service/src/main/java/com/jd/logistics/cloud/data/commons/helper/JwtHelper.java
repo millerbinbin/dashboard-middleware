@@ -1,4 +1,4 @@
-package com.jd.logistics.cloud.data.commons;
+package com.jd.logistics.cloud.data.commons.helper;
 
 import com.jd.logistics.cloud.data.domain.UserRole;
 import io.jsonwebtoken.Claims;

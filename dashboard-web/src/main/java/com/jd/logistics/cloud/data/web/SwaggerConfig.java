@@ -24,7 +24,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.fresh.hydra.man.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.jd.logistics.cloud.data.web.api"))
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
                 .build();
@@ -34,7 +34,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("REST API")
                 .description("前后端分离的协议在这里定义")
-                .contact("ABC")
+                .contact("hubin")
                 .version("1.0.0")
                 .build();
     }

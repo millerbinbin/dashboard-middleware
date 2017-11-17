@@ -1,6 +1,5 @@
 package com.jd.logistics.cloud.data.web;
 
-import com.jd.logistics.cloud.data.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

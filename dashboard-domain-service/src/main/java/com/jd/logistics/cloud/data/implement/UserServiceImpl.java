@@ -1,5 +1,7 @@
 package com.jd.logistics.cloud.data.implement;
 
+import com.jd.logistics.cloud.data.commons.helper.MD5Helper;
+import com.jd.logistics.cloud.data.domain.RequestError;
 import com.jd.logistics.cloud.data.domain.User;
 import com.jd.logistics.cloud.data.repository.UserRepository;
 import com.jd.logistics.cloud.data.service.UserService;
@@ -22,13 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkPwd(String username, String pwd) {
-        return pwd.equals(userRepository.getByUsername(username).getPassword());
-    }
-
-    @Override
-    public boolean checkUser(String username) {
-        return null != getUserByName(username);
+    public RequestError checkUserPwd(String username, String password) {
+        User user = getUserByName(username);
+        if (user == null)
+            return new RequestError("账户不存在，请重新输入！");
+        String encryptPwd = user.getPassword();
+        if (! MD5Helper.validateMD5Password(password, username, encryptPwd))
+            return new RequestError("密码不正确！");
+        return null;
     }
 
     @Override

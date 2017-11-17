@@ -1,6 +1,6 @@
-package com.jd.logistics.cloud.data;
+package com.jd.logistics.cloud.data.web;
 
-import com.jd.logistics.cloud.data.commons.JwtHelper;
+import com.jd.logistics.cloud.data.commons.helper.JwtHelper;
 import com.jd.logistics.cloud.data.domain.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -60,7 +59,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             if (userRole != null) {
                 String username = userRole.getUsername();
                 List<String> roles = userRole.getRoles();
-                logger.info("checking authentication " + username);
+                // logger.info("checking authentication " + username);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                     List<GrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
@@ -68,7 +67,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                             userDetails, null, authorities);
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
                             request));
-                    logger.info("authenticated user " + username + ", setting security context");
+                    // logger.info("authenticated user " + username + ", setting security context");
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } else {

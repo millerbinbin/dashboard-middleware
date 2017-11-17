@@ -1,5 +1,6 @@
 package com.jd.logistics.cloud.data.service;
 
+import com.jd.logistics.cloud.data.domain.RequestError;
 import com.jd.logistics.cloud.data.domain.User;
 
 /**
@@ -10,9 +11,7 @@ import com.jd.logistics.cloud.data.domain.User;
 public interface UserService {
     User getUserByName(String username);
 
-    boolean checkPwd(String username, String pwd);
-
-    boolean checkUser(String username);
+    RequestError checkUserPwd(String username, String password);
 
     User getUserById(long id);
 

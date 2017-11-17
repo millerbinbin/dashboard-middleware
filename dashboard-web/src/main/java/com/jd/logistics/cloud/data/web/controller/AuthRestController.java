@@ -1,12 +1,14 @@
 package com.jd.logistics.cloud.data.web.controller;
 
-import com.jd.logistics.cloud.data.commons.validation.Errors;
+import com.jd.logistics.cloud.data.commons.helper.MD5Helper;
 import com.jd.logistics.cloud.data.domain.AuthToken;
+import com.jd.logistics.cloud.data.domain.RequestError;
 import com.jd.logistics.cloud.data.domain.User;
 import com.jd.logistics.cloud.data.domain.UserRole;
 import com.jd.logistics.cloud.data.service.AuthService;
 import com.jd.logistics.cloud.data.service.UserService;
 import com.jd.logistics.cloud.data.web.api.AuthApi;
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,15 +33,11 @@ public class AuthRestController implements AuthApi {
 
     @Override
     public ResponseEntity<?> getToken(@Valid @RequestBody User user) {
-        Errors.Builder errorsBuilder = new Errors.Builder();
         String username = user.getUsername();
-        if (!userService.checkUser(username)) {
-            errorsBuilder.addFieldError("username", "账户不存在，请重新输入！");
-            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
-        }
-        if (!userService.checkPwd(username, user.getPassword())) {
-            errorsBuilder.addFieldError("password", "密码不正确！");
-            return new ResponseEntity<>(errorsBuilder.build(), HttpStatus.OK);
+        String password = user.getPassword();
+        RequestError error = userService.checkUserPwd(username, password);
+        if (error != null) {
+            return new ResponseEntity<>(error, HttpStatus.OK);
         }
         String[] userRoles = userService.getRolesByUsername(username);
         Map<String, Object> params = new HashMap<>();

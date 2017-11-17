@@ -1,6 +1,7 @@
 package com.jd.logistics.cloud.data.implement;
 
-import com.jd.logistics.cloud.data.commons.Helper;
+import com.jd.logistics.cloud.data.commons.helper.ModelHelper;
+import com.jd.logistics.cloud.data.commons.helper.RowSetHelper;
 import com.jd.logistics.cloud.data.service.GridService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,11 +22,11 @@ public class GridServiceImpl implements GridService {
 
     @Override
     public Map getMetricGrid(String metricId, String dateCycle, Map<String, String> params) {
-        String sql = Helper.getMetricGridSql(metricId, dateCycle);
+        String sql = ModelHelper.getMetricGridSql(metricId, dateCycle);
         for (Map.Entry<String, String> p : params.entrySet()) {
             sql = sql.replace(String.format("#{{%s}}", p.getKey()), p.getValue());
         }
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
-        return Helper.RowSet2HeaderAndRes(rowSet);
+        return RowSetHelper.RowSet2HeaderAndRes(rowSet);
     }
 }

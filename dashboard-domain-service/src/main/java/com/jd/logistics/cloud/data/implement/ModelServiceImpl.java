@@ -1,7 +1,7 @@
 package com.jd.logistics.cloud.data.implement;
 
 import com.jd.logistics.cloud.data.commons.Constants;
-import com.jd.logistics.cloud.data.commons.Helper;
+import com.jd.logistics.cloud.data.commons.helper.ModelHelper;
 import com.jd.logistics.cloud.data.service.ModelService;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +19,12 @@ public class ModelServiceImpl implements ModelService {
     private static final String numberTemplate = getMetricValueFormat();
 
     private static String getMetricChartFormat() {
-        return Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER +
+        return ModelHelper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER +
                 "/" + Constants.CHART_TEMPLATE_FILE);
     }
 
     private static String getMetricValueFormat() {
-        return Helper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER +
+        return ModelHelper.getStringFromResourcePath(Constants.TEMPLATE_PARENT_FOLDER +
                 "/" + Constants.VALUE_TEMPLATE_FILE);
     }
 

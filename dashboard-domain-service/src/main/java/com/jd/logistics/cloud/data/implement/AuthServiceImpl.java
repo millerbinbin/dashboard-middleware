@@ -1,6 +1,6 @@
 package com.jd.logistics.cloud.data.implement;
 
-import com.jd.logistics.cloud.data.commons.JwtHelper;
+import com.jd.logistics.cloud.data.commons.helper.JwtHelper;
 import com.jd.logistics.cloud.data.domain.UserRole;
 import com.jd.logistics.cloud.data.service.AuthService;
 import org.springframework.stereotype.Service;

@@ -14,7 +14,7 @@ import java.util.List;
  * @Date 2017/10/31 14:41
  */
 @RequestMapping(value = "/api/dim")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public interface DimApi {
 
     @RequestMapping(value = "/warehouse",
@@ -22,9 +22,8 @@ public interface DimApi {
             method = RequestMethod.GET)
     List<Warehouse> getWarehouses();
 
-    @RequestMapping(value = "/datecycle",
+    @RequestMapping(value = "/dateCycle",
             produces = {"application/json"},
             method = RequestMethod.GET)
     List<DateCycle> getDateCycles();
-
 }

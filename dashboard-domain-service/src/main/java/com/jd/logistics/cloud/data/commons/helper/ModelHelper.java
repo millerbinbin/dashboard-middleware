@@ -1,7 +1,8 @@
-package com.jd.logistics.cloud.data.commons;
+package com.jd.logistics.cloud.data.commons.helper;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.io.Resources;
+import com.jd.logistics.cloud.data.commons.Constants;
 import com.jd.logistics.cloud.data.domain.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,15 +15,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author hubin
  * @Description:
  * @Date 2017/11/7 9:28
  */
-public class Helper {
+public class ModelHelper {
+    private static ConcurrentHashMap<String, String> resourceContent = new ConcurrentHashMap<>();
+
     @NotNull
-    public static String InputStream2String(InputStream in) {
+    private static String InputStream2String(InputStream in) {
         StringBuffer out = new StringBuffer();
         byte[] b = new byte[4096];
         try {
@@ -36,7 +40,7 @@ public class Helper {
     }
 
     @NotNull
-    public static String getStringFromResourcePath(String filePath) {
+    private static String getStringFromResourcePath(String filePath) {
         InputStream in = null;
         try {
             in = Resources.getResource(filePath).openStream();
@@ -46,10 +50,29 @@ public class Helper {
         return InputStream2String(in);
     }
 
+    @Nullable
+    private static String getContentFromCache (String key) {
+        if (resourceContent.get(key) != null) {
+            return resourceContent.get(key).toString();
+        }
+        return null;
+    }
+
+    private static void saveContentToCache (String key, String content) {
+        resourceContent.put(key, content);
+    }
+
     public static BaseModel getBaseModel(String metricId) {
-        String json = getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
-                metricId + "/" + Constants.CONFIG_MODEL_FILE);
-        BaseModel bm = JSON.parseObject(json, BaseModel.class);
+        String content;
+        String key = "BaseModel" + metricId;
+        if (getContentFromCache(key) == null){
+            content = getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                    metricId + "/" + Constants.CONFIG_MODEL_FILE);
+            saveContentToCache(key, content);
+        } else {
+            content = getContentFromCache(key).toString();
+        }
+        BaseModel bm = JSON.parseObject(content, BaseModel.class);
         return bm;
     }
 
@@ -110,8 +133,16 @@ public class Helper {
     @NotNull
     public static String getMetricChartSql(String metricId, String dateCycle) {
         ChartModel model = getChartModelByDateCycle(metricId, dateCycle);
-        return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
-                metricId + "/" + model.getSql());
+        String key = "MetricChartSql" + metricId + dateCycle;
+        String content;
+        if (getContentFromCache(key) == null) {
+            content = getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
+                    metricId + "/" + model.getSql());
+            saveContentToCache(key, content);
+        } else {
+            content = getContentFromCache(key).toString();
+        }
+        return content;
     }
 
     @NotNull
@@ -131,53 +162,5 @@ public class Helper {
     public static String getMetricChartOption(String metricId, String dateCycle) {
         return getStringFromResourcePath(Constants.CONFIG_PARENT_FOLDER + "/" +
                 metricId + "/" + dateCycle + Constants.CHART_OPTION_SUFFIX);
-    }
-
-    public static Map<String, List<Object>> RowSet2ArrayRes(SqlRowSet rowSet) {
-        SqlRowSetMetaData metaData = rowSet.getMetaData();
-        String[] colNames = metaData.getColumnNames();
-        CommonRes cr = new CommonRes();
-        while (rowSet.next()) {
-            for (String col : colNames) {
-                String c = col.toLowerCase();
-                cr.addItem(c, rowSet.getObject(col));
-            }
-        }
-        return cr.getArrayResult();
-    }
-
-    public static Map<String, List<Object>> RowSet2HeaderAndRes(SqlRowSet rowSet) {
-        SqlRowSetMetaData metaData = rowSet.getMetaData();
-        String[] colNames = metaData.getColumnNames();
-        Map resMap = new HashMap();
-        List<String> headers = new ArrayList<>();
-        for (int i = 1; i <= colNames.length; i++) {
-            headers.add("c" + i + "," + metaData.getColumnLabel(i));
-        }
-        resMap.put("headers", headers);
-
-        List<Map<String, Object>> itemList = new ArrayList<>();
-        while (rowSet.next()) {
-            Map<String, Object> tmp = new HashMap<>();
-            for (int i = 1; i <= colNames.length; i++) {
-                tmp.put("c" + i, rowSet.getObject(i));
-            }
-            itemList.add(tmp);
-        }
-        resMap.put("items", itemList);
-
-        return resMap;
-    }
-
-    public static Map<String, Object> RowSet2SingleRes(SqlRowSet rowSet) {
-        SqlRowSetMetaData metaData = rowSet.getMetaData();
-        String[] colNames = metaData.getColumnNames();
-        CommonRes cr = new CommonRes();
-        rowSet.next();
-        for (String col : colNames) {
-            String c = col.toLowerCase();
-            cr.putItem(c, rowSet.getObject(col));
-        }
-        return cr.getSingleResult();
     }
 }

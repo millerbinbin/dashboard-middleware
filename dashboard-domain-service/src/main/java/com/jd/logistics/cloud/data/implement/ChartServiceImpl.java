@@ -1,6 +1,7 @@
 package com.jd.logistics.cloud.data.implement;
 
-import com.jd.logistics.cloud.data.commons.Helper;
+import com.jd.logistics.cloud.data.commons.helper.ModelHelper;
+import com.jd.logistics.cloud.data.commons.helper.RowSetHelper;
 import com.jd.logistics.cloud.data.service.ChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,16 +22,16 @@ public class ChartServiceImpl implements ChartService {
 
     @Override
     public Map getMetricChart(String metricId, String dateCycle, Map<String, String> params) {
-        String sql = Helper.getMetricChartSql(metricId, dateCycle);
+        String sql = ModelHelper.getMetricChartSql(metricId, dateCycle);
         for (Map.Entry<String, String> p : params.entrySet()) {
             sql = sql.replace(String.format("#{{%s}}", p.getKey()), p.getValue());
         }
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
-        return Helper.RowSet2ArrayRes(rowSet);
+        return RowSetHelper.RowSet2ArrayRes(rowSet);
     }
 
     @Override
     public String getMetricChartOption(String metricId, String dateCycle) {
-        return Helper.getMetricChartOption(metricId, dateCycle);
+        return ModelHelper.getMetricChartOption(metricId, dateCycle);
     }
 }

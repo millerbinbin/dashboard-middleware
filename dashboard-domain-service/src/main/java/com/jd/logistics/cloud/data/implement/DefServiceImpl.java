@@ -1,6 +1,6 @@
 package com.jd.logistics.cloud.data.implement;
 
-import com.jd.logistics.cloud.data.commons.Helper;
+import com.jd.logistics.cloud.data.commons.helper.ModelHelper;
 import com.jd.logistics.cloud.data.service.DefService;
 import com.jd.logistics.cloud.data.service.MetricService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class DefServiceImpl implements DefService {
 
     @Override
     public Map getMetricDef(String metricId) {
-        Map res = Helper.getDesc(metricId);
+        Map res = ModelHelper.getDesc(metricId);
         res.put("id", metricId);
         res.put("name", metricService.getMetricNameById(metricId));
         return res;

@@ -14,10 +14,6 @@ public class AuthToken implements Serializable {
     private static final long serialVersionUID = -8929555440395946568L;
     private String token;
 
-//    public AuthToken(String token) {
-//        this.token = token;
-//    }
-
     public void setToken(String token) {
         this.token = token;
     }
